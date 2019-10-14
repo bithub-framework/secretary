@@ -9,6 +9,7 @@ class PrivateRequests {
     constructor(private config: Config) {
 
     }
+
     public makeOrder(
         marketId: string,
         accountId: string,
@@ -20,6 +21,7 @@ class PrivateRequests {
             order,
         );
     }
+
     public cancelOrder(
         marketId: string,
         accountId: string,
@@ -31,6 +33,7 @@ class PrivateRequests {
             orderId,
         );
     }
+
     public getOpenOrders(
         marketId: string,
         accountId: string,
@@ -38,6 +41,16 @@ class PrivateRequests {
         return axios.get(
             `${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId
             }/get-open-orders`,
+        );
+    }
+
+    public next(
+        marketId: string,
+        accountId: string,
+    ): Promise<void> {
+        return axios.post(
+            `${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId
+            }/next`
         );
     }
 }

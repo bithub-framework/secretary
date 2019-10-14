@@ -17,6 +17,9 @@ class PrivateRequests {
     getOpenOrders(marketId, accountId) {
         return axios_1.default.get(`${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId}/get-open-orders`);
     }
+    next(marketId, accountId) {
+        return axios_1.default.post(`${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId}/next`);
+    }
 }
 exports.PrivateRequests = PrivateRequests;
 exports.default = PrivateRequests;
