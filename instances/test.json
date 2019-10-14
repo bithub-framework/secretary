@@ -1,0 +1,13 @@
+{
+    "markets": {
+        "main": {
+            "name": "okex/BTC/USDT",
+            "exchange": "okex",
+            "pair": "BTC/USDT",
+            "accounts": [
+                "cuizimu"
+            ]
+        }
+    },
+    "strategy": "test-strategy"
+}

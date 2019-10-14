@@ -1,0 +1,5 @@
+{
+    "PUBLIC_CENTER_BASE_URL": "ws://localhost:12001",
+    "PRIVATE_CENTER_BASE_URL": "ws://localhost:12002",
+    "TRADE_TTL": 12000
+}
