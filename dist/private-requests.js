@@ -1,26 +1,20 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = __importDefault(require("axios"));
+import fetch from 'node-fetch';
+import config from './config';
 class PrivateRequests {
-    constructor(config) {
-        this.config = config;
+    makeOrder(marketName, accountName, order) {
+        return fetch(`${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName}/make-order`, {
+            method: 'post',
+            body: JSON.stringify(order),
+            headers: { 'Content-Type': 'application/json' },
+        });
     }
-    makeOrder(marketId, accountId, order) {
-        return axios_1.default.post(`${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId}/make-order`, order);
+    cancelOrder(marketName, accountName, orderId) {
+        return fetch(`${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName}/cancel-order?oid=${orderId}`).then(() => { });
     }
-    cancelOrder(marketId, accountId, orderId) {
-        return axios_1.default.put(`${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId}/cancel-order`, orderId);
-    }
-    getOpenOrders(marketId, accountId) {
-        return axios_1.default.get(`${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId}/get-open-orders`);
-    }
-    next(marketId, accountId) {
-        return axios_1.default.post(`${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId}/next`);
+    getOpenOrders(marketName, accountName) {
+        return fetch(`${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName}/get-open-orders`).then(res => res.json());
     }
 }
-exports.PrivateRequests = PrivateRequests;
-exports.default = PrivateRequests;
+export default PrivateRequests;
+export { PrivateRequests };
 //# sourceMappingURL=private-requests.js.map

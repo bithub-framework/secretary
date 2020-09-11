@@ -1,80 +1,68 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const events_1 = __importDefault(require("events"));
-// 没状态的程序用函数式比较方便一点。
-function makeContextAccessor(instanceConfig, publicSockets, privateSockets, publicData, privateRequests) {
-    function makeMarketAccessor(marketId) {
-        function makeAccountAccessor(accountId) {
-            const accountAccessor = function () {
-                return contextAccount;
-            };
-            const contextAccount = new Proxy({}, {
-                get: function (target, field, receiver) {
-                    let member;
-                    if (member === undefined) {
-                        member = Reflect.get(privateRequests, field, privateRequests);
-                        if (member)
-                            member
-                                = (...args) => member(marketId, accountId, ...args);
-                    }
-                    if (member === undefined) {
-                        member = Reflect.get(privateSockets[marketId][accountId], field, privateSockets[marketId][accountId]);
-                    }
-                    return member;
-                }
-            });
-            return accountAccessor;
-        }
-        const contextMarketAccessor = function () {
-            return contextMarket;
-        };
-        const publicEvents = new events_1.default();
-        publicSockets[marketId].orderbook.on('data', (data) => {
-            publicEvents.emit('orderbook', data);
-        });
-        publicSockets[marketId].trades.on('data', (data) => {
-            publicEvents.emit('trades', data);
-        });
-        const { accounts } = instanceConfig.markets[marketId];
-        for (const accountId of accounts) {
-            contextMarketAccessor[accountId] = makeAccountAccessor(accountId);
-        }
-        const mainAccountId = instanceConfig.markets[mainMarketId].accounts[0];
-        const contextMarket = new Proxy({}, {
-            get: function (target, field, receiver) {
-                let member;
-                if (member === undefined)
-                    member = Reflect.get(publicData, field, publicData);
-                if (member === undefined)
-                    member = Reflect.get(publicEvents, field, publicEvents);
-                if (member === undefined) {
-                    const contextMainAccount = contextMarketAccessor[mainAccountId]();
-                    member = Reflect.get(contextMainAccount, field, contextMainAccount);
-                }
-                return member;
-            }
-        });
-        return contextMarketAccessor;
+import Startable from 'startable';
+import TtlQueue from 'ttl-queue';
+// import pythonize from 'pythonized-array';
+import Queue from 'queue';
+import PrivateRequests from './private-requests';
+class ContextAccount {
+    constructor(instanceConfig, mid, aid, privateRequests) {
+        this.privateRequests = privateRequests;
+        this.marketConfig = instanceConfig.markets[mid];
+        this.accountConfig = this.marketConfig.accounts[aid];
     }
-    const contextAccessor = function () {
-        return context;
-    };
-    const marketIds = Object.keys(instanceConfig.markets);
-    for (const marketId of marketIds)
-        contextAccessor[marketId] = makeMarketAccessor(marketId);
-    const mainMarketId = Object.keys(instanceConfig.markets)[0];
-    const context = new Proxy({}, {
-        get: function (target, field, receiver) {
-            const contextMainMarket = contextAccessor[mainMarketId]();
-            const member = Reflect.get(contextMainMarket, field, contextMainMarket);
-            return member;
-        }
-    });
-    return contextAccessor;
+    async makeOrder(order) {
+        return this.privateRequests.makeOrder(`${this.marketConfig.exchange}/${this.marketConfig.pair}`, this.accountConfig, order);
+    }
+    async cancelOrder(oid) {
+        return this.privateRequests.cancelOrder(`${this.marketConfig.exchange}/${this.marketConfig.pair}`, this.accountConfig, oid);
+    }
+    async getOpenOrders() {
+        return this.privateRequests.getOpenOrders(`${this.marketConfig.exchange}/${this.marketConfig.pair}`, this.accountConfig);
+    }
 }
-exports.makeContextAccessor = makeContextAccessor;
-exports.default = makeContextAccessor;
+class ContextMarket extends Startable {
+    constructor(instanceConfig, mid, privateRequest) {
+        super();
+        const marketConfig = instanceConfig.markets[mid];
+        for (const aid of marketConfig.accounts.keys()) {
+            this[aid] = new ContextAccount(instanceConfig, mid, aid, privateRequest);
+        }
+        this.trades = new TtlQueue({
+            ttl: 2 * 60 * 1000,
+            cleaningInterval: 10 * 1000,
+            elemCarrierConstructor: Queue,
+            timeCarrierConstructor: Queue,
+        }, setTimeout, clearTimeout);
+        // this.trades = pythonize<Trade>(this.trades);
+        this.orderbook = {
+            asks: [], bids: [], time: Number.NEGATIVE_INFINITY,
+        };
+    }
+    async _start() {
+        await this.trades.start(err => void this.stop(err));
+    }
+    async _stop() {
+        await this.trades.stop();
+    }
+}
+class Context extends Startable {
+    constructor(instanceConfig) {
+        super();
+        this.instanceConfig = instanceConfig;
+        const privateRequests = new PrivateRequests();
+        for (const mid of this.instanceConfig.markets.keys()) {
+            this[mid] = new ContextMarket(this.instanceConfig, mid, privateRequests);
+        }
+    }
+    async _start() {
+        for (const mid of this.instanceConfig.markets.keys()) {
+            await this[mid].start(err => void this.stop(err));
+        }
+    }
+    async _stop() {
+        for (const mid of this.instanceConfig.markets.keys()) {
+            await this[mid].stop();
+        }
+    }
+}
+export { Context as default, Context, };
 //# sourceMappingURL=context.js.map

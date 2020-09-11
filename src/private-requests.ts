@@ -1,57 +1,46 @@
-import axios from 'axios';
+import fetch from 'node-fetch';
 import {
     Order,
     OrderId,
-    Config,
 } from './interfaces';
+import config from './config';
 
 class PrivateRequests {
-    constructor(private config: Config) {
-
-    }
-
     public makeOrder(
-        marketId: string,
-        accountId: string,
+        marketName: string,
+        accountName: string,
         order: Order,
     ): Promise<OrderId> {
-        return axios.post(
-            `${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId
+        return fetch(
+            `${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName
             }/make-order`,
-            order,
+            {
+                method: 'post',
+                body: JSON.stringify(order),
+                headers: { 'Content-Type': 'application/json' },
+            }
         );
     }
 
     public cancelOrder(
-        marketId: string,
-        accountId: string,
+        marketName: string,
+        accountName: string,
         orderId: OrderId,
     ): Promise<void> {
-        return axios.put(
-            `${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId
-            }/cancel-order`,
-            orderId,
-        );
+        return fetch(
+            `${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName
+            }/cancel-order?oid=${orderId}`,
+        ).then(() => { });
     }
 
     public getOpenOrders(
-        marketId: string,
-        accountId: string,
+        marketName: string,
+        accountName: string,
     ): Promise<Order[]> {
-        return axios.get(
-            `${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId
+        return fetch(
+            `${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName
             }/get-open-orders`,
-        );
-    }
-
-    public next(
-        marketId: string,
-        accountId: string,
-    ): Promise<void> {
-        return axios.post(
-            `${this.config.PRIVATE_CENTER_BASE_URL}/${marketId}/${accountId
-            }/next`
-        );
+        ).then(res => res.json());
     }
 }
 

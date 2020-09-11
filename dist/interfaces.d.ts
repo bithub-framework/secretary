@@ -1,68 +1,42 @@
-/// <reference types="node" />
 export * from 'interfaces';
-export { PrivateRequests } from './private-requests';
-import EventEmitter from 'events';
+import EventEmitter from 'eventemitter3';
 import WebSocket from 'ws';
-import Queue from 'ttl-queue';
-import { Orderbook, Trade } from 'interfaces';
-interface ContextAccessor {
-    (): Context;
-    [marketId: string]: ContextMarketAccessor;
-}
-declare type Context = ContextMarket;
-declare type ContextMarket = ContextPublicApi & ContextPrivateApi;
-interface ContextMarketAccessor {
-    (): ContextMarket;
-    [account: string]: ContextAccountAccessor;
-}
-interface ContextPublicApi extends EventEmitter {
+import { Orderbook, Order, Trade, OrderId } from 'interfaces';
+import { StartableLike } from 'startable';
+import { RandomAccessIterableQueueInterface as RAIQI } from 'queue';
+export interface ContextMarketPublicData extends EventEmitter {
     orderbook: Orderbook;
-    trades: Trade[];
+    trades: RAIQI<Trade>;
 }
-interface ContextAccountAccessor {
-    (): ContextAccount;
+export interface ContextAccountPrivateApi {
+    makeOrder(order: Order): Promise<OrderId>;
+    getOpenOrders(): Promise<Order[]>;
+    cancelOrder(orderId: OrderId): Promise<void>;
 }
-declare type ContextAccount = ContextPrivateApi;
-interface ContextPrivateApi {
-    makeOrder(): Promise<void>;
+export interface Context {
+    [marketId: number]: ContextMarket;
 }
-interface InstanceConfig {
+export interface ContextMarket extends ContextMarketPublicData {
+    [accountId: number]: ContextAccount;
+}
+export interface ContextAccount extends ContextAccountPrivateApi {
+}
+export interface InstanceConfig {
     markets: {
-        [marketId: string]: {
-            exchange: string;
-            pair: string;
-            accounts: string[];
-        };
-    };
-    strategy: string;
+        exchange: string;
+        pair: string;
+        accounts: string[];
+    }[];
+    strategyPath: string;
+    tradeTtl: number;
 }
-interface Strategy {
-    start(): any;
-    stop(): any;
+export declare type Strategy = StartableLike;
+export interface StrategyCtor {
+    new (ctx: Context): Strategy;
 }
-interface StrategyCtor {
-    new (ctx: ContextAccessor): Strategy;
-}
-interface PublicSockets {
-    [marketId: string]: {
+export interface PublicSockets {
+    [marketId: number]: {
         trades: WebSocket;
         orderbook: WebSocket;
     };
 }
-interface PrivateSockets {
-    [marketId: string]: {
-        [account: string]: WebSocket;
-    };
-}
-interface Config {
-    PRIVATE_CENTER_BASE_URL: string;
-    PUBLIC_CENTER_BASE_URL: string;
-    TRADE_TTL: number;
-}
-interface PublicData {
-    [marketId: string]: {
-        orderbook: Orderbook;
-        trades: Queue<Trade>;
-    };
-}
-export { ContextAccessor, Context, ContextMarketAccessor, ContextMarket, ContextAccountAccessor, ContextAccount, ContextPublicApi, ContextPrivateApi, PublicSockets, PrivateSockets, StrategyCtor, Strategy, PublicData, InstanceConfig, Config, };

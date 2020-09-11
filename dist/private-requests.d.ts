@@ -1,11 +1,8 @@
-import { Order, OrderId, Config } from './interfaces';
+import { Order, OrderId } from './interfaces';
 declare class PrivateRequests {
-    private config;
-    constructor(config: Config);
-    makeOrder(marketId: string, accountId: string, order: Order): Promise<OrderId>;
-    cancelOrder(marketId: string, accountId: string, orderId: OrderId): Promise<void>;
-    getOpenOrders(marketId: string, accountId: string): Promise<Order[]>;
-    next(marketId: string, accountId: string): Promise<void>;
+    makeOrder(marketName: string, accountName: string, order: Order): Promise<OrderId>;
+    cancelOrder(marketName: string, accountName: string, orderId: OrderId): Promise<void>;
+    getOpenOrders(marketName: string, accountName: string): Promise<Order[]>;
 }
 export default PrivateRequests;
 export { PrivateRequests };
