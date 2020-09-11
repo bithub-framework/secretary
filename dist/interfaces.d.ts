@@ -1,8 +1,6 @@
 export * from 'interfaces';
 import EventEmitter from 'eventemitter3';
-import WebSocket from 'ws';
 import { Orderbook, Order, Trade, OrderId } from 'interfaces';
-import { StartableLike } from 'startable';
 import { RandomAccessIterableQueueInterface as RAIQI } from 'queue';
 export interface ContextMarketPublicData extends EventEmitter {
     orderbook: Orderbook;
@@ -29,14 +27,4 @@ export interface InstanceConfig {
     }[];
     strategyPath: string;
     tradeTtl: number;
-}
-export declare type Strategy = StartableLike;
-export interface StrategyCtor {
-    new (ctx: Context): Strategy;
-}
-export interface PublicSockets {
-    [marketId: number]: {
-        trades: WebSocket;
-        orderbook: WebSocket;
-    };
 }

@@ -6,14 +6,13 @@ import {
 import config from './config';
 
 class PrivateRequests {
-    public makeOrder(
+    public async makeOrder(
         marketName: string,
         accountName: string,
         order: Order,
     ): Promise<OrderId> {
         return fetch(
-            `${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName
-            }/make-order`,
+            `${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName}/make-order`,
             {
                 method: 'post',
                 body: JSON.stringify(order),
@@ -22,7 +21,7 @@ class PrivateRequests {
         );
     }
 
-    public cancelOrder(
+    public async cancelOrder(
         marketName: string,
         accountName: string,
         orderId: OrderId,
@@ -33,7 +32,7 @@ class PrivateRequests {
         ).then(() => { });
     }
 
-    public getOpenOrders(
+    public async getOpenOrders(
         marketName: string,
         accountName: string,
     ): Promise<Order[]> {

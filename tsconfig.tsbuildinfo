@@ -561,24 +561,19 @@
         "signature": "bdc1b8a6d337a5f75361086ee5a7770aafffcab2021bfc5d5f97e7d1daff4fb3",
         "affectsGlobalScope": false
       },
-      "./node_modules/@types/ws/index.d.ts": {
-        "version": "81361d2b8ba5b6bae26d65a42c01cb163e49dc626fd5c151b8b337f5d44d3bf8",
-        "signature": "81361d2b8ba5b6bae26d65a42c01cb163e49dc626fd5c151b8b337f5d44d3bf8",
-        "affectsGlobalScope": false
-      },
       "./src/interfaces.ts": {
-        "version": "af1fea3af8c41b03e9ad4ab2c98cdff4aaf802bbcd6adb7e6e322c66789318d1",
-        "signature": "96148c66c4ef23bb4f52c91163f6a19163c865279f59b98fc1c714d63bd8587b",
+        "version": "4f18e448493c90dffc9fd627274b7a349814c9e50af04417699858acc80dc844",
+        "signature": "63721ee12d0fa9eb2c314802dacf6483885910009dcd44a169536b3eb85e3527",
         "affectsGlobalScope": false
       },
       "./src/private-requests.ts": {
-        "version": "926f06ef364e3d5def5720614f85bf0ef1e19d540affe52bbd56379cac92f35e",
+        "version": "45ef71595423b1e9d859d174366663b6ea11dcea6ea03e6092ed82ae481ccc5f",
         "signature": "c675e7af3c4f17ba912858c236ef98138fabeb0af76cd3dabe150a006e4e5190",
         "affectsGlobalScope": false
       },
       "./src/context.ts": {
-        "version": "adfa24c539c895b772f451250fda2d4c48ec89cf56298a4f332cc7189065c141",
-        "signature": "bbf01f10de938f66d223950880fccaed4ed2a0a88c7b8adcd309a1624f492936",
+        "version": "22bb57e5cad6b6b347404c986727bd5bd0570202106167a8810efc98837f0014",
+        "signature": "fcfa0fd413c8e1487b554b2ea00a1ad183fd6570e7d0d7587e063539de274d72",
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
@@ -591,9 +586,14 @@
         "signature": "b4730e5cbeac402e543a0186f3c7521bd7c3c25c8fc7cf048103fc6487566654",
         "affectsGlobalScope": false
       },
+      "./node_modules/@types/ws/index.d.ts": {
+        "version": "81361d2b8ba5b6bae26d65a42c01cb163e49dc626fd5c151b8b337f5d44d3bf8",
+        "signature": "81361d2b8ba5b6bae26d65a42c01cb163e49dc626fd5c151b8b337f5d44d3bf8",
+        "affectsGlobalScope": false
+      },
       "./src/secretary.ts": {
-        "version": "06fdb8aa08a3d2b568b8235ef5cd9925a539c3fa48157aeb292cb5cc64e3db12",
-        "signature": "9b73bdc18411631c6b197833e830c3920a4e1afcf2a1b5a6fe3246c7ce161923",
+        "version": "4d5437261b40349a654ab0e20dfe6014b1d6be1bc5cd1d20e19a9f7aa9b78d19",
+        "signature": "2549322e6064a20e07f939ce9149049b890037a08c3574d1dbe0a5010c17340d",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/chai/index.d.ts": {
@@ -1513,7 +1513,6 @@
         "./node_modules/startable/dist/index.d.ts",
         "./node_modules/ttl-queue/dist/index.d.ts",
         "./node_modules/ttl-queue/node_modules/queue/dist/index.d.ts",
-        "./src/config.ts",
         "./src/interfaces.ts",
         "./src/private-requests.ts"
       ],
@@ -1528,7 +1527,6 @@
         "./node_modules/@types/node/ts3.1/util.d.ts",
         "./node_modules/@types/node/ts3.3/fs.d.ts",
         "./node_modules/@types/node/ts3.3/util.d.ts",
-        "./node_modules/@types/ws/index.d.ts",
         "./node_modules/eventemitter3/index.d.ts",
         "./node_modules/interfaces/dist/index.d.ts",
         "./node_modules/startable/dist/index.d.ts",
@@ -1555,7 +1553,8 @@
         "./node_modules/startable/dist/index.d.ts",
         "./src/config.ts",
         "./src/context.ts",
-        "./src/interfaces.ts"
+        "./src/interfaces.ts",
+        "./src/private-requests.ts"
       ],
       "../../../../../../usr/local/lib/node_modules/typescript/lib/lib.es2015.collection.d.ts": [
         "./node_modules/@types/node/ts3.1/fs.d.ts",
@@ -2620,17 +2619,16 @@
         "./src/private-requests.ts"
       ],
       "./src/interfaces.ts": [
-        "./node_modules/@types/ws/index.d.ts",
         "./node_modules/eventemitter3/index.d.ts",
         "./node_modules/interfaces/dist/index.d.ts",
-        "./node_modules/startable/dist/index.d.ts",
         "./node_modules/ttl-queue/node_modules/queue/dist/index.d.ts"
       ],
       "./src/private-requests.ts": [
         "./src/interfaces.ts"
       ],
       "./src/secretary.ts": [
-        "./node_modules/startable/dist/index.d.ts"
+        "./node_modules/startable/dist/index.d.ts",
+        "./src/context.ts"
       ],
       "../../../../../../usr/local/lib/node_modules/typescript/lib/lib.es2015.collection.d.ts": [
         "./node_modules/@types/node/ts3.1/fs.d.ts",

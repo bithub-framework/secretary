@@ -1,36 +1,52 @@
-import Startable from 'startable';
+import { Startable, StartableLike } from 'startable';
 import { readJsonSync } from 'fs-extra';
-import { resolve } from 'path';
+import { resolve, dirname } from 'path';
 import WebSocket from 'ws';
 import { once } from 'events';
 import Context from './context';
+import PrivateRequests from './private-requests';
 import {
-    PublicSockets,
     InstanceConfig,
-    StrategyCtor,
-    Strategy,
+    Trade,
+    Orderbook,
 } from './interfaces';
 import config from './config';
 
+
+
+export type Strategy = StartableLike;
+
+export interface StrategyCtor {
+    new(ctx: Context): Strategy;
+}
+
 class Secretary extends Startable {
     private instanceConfig: InstanceConfig;
-    private publicSockets: PublicSockets = {};
     private ctx: Context;
     private strategy?: Strategy;
+    private publicSockets: {
+        trades: WebSocket,
+        orderbook: WebSocket,
+    }[] = [];
 
     constructor() {
         super();
         this.instanceConfig = readJsonSync(process.argv[3]);
-        this.ctx = new Context(this.instanceConfig);
+        this.ctx = new Context(
+            this.instanceConfig,
+            new PrivateRequests(),
+        );
     }
 
     protected async _start(): Promise<void> {
+        await this.ctx.start(err => void this.stop(err));
         await this.connectPublicCenter();
         await this.startStrategy();
     }
 
     protected async _stop(): Promise<void> {
         if (this.strategy) await this.strategy.stop();
+        await this.disconnectPublicCenter();
         await this.ctx.stop();
     }
 
@@ -42,27 +58,47 @@ class Secretary extends Startable {
 
             const oSocket = new WebSocket(`${config.PUBLIC_CENTER_BASE_URL}/${marketName}/orderbook`);
             oSocket.on('message', (message: string) => {
-                oSocket.emit('data', JSON.parse(message));
+                const orderbook = <Orderbook>JSON.parse(message);
+                this.ctx[mid].orderbook = orderbook;
+                this.ctx[mid].emit('orderbook', orderbook);
             });
-            await once(oSocket, 'open');
 
             const tSocket = new WebSocket(`${config.PUBLIC_CENTER_BASE_URL}/${marketName}/trades`);
             tSocket.on('message', (message: string) => {
-                tSocket.emit('data', JSON.parse(message));
+                const trades = <Trade[]>JSON.parse(message);
+                trades.forEach(trade => void this.ctx[mid].trades.push(trade, trade.time));
+                this.ctx[mid].emit('trades', trades);
             });
-            await once(tSocket, 'open');
 
             this.publicSockets[mid] = {
                 trades: tSocket,
                 orderbook: oSocket,
-            };
+            }
+            await once(oSocket, 'open');
+            await once(tSocket, 'open');
         }
+    }
+
+    private async disconnectPublicCenter(): Promise<void> {
+        await Promise.all(this.publicSockets.reduce((promises, {
+            trades: tSocket, orderbook: oSocket,
+        }) => {
+            if (tSocket.readyState !== WebSocket.CLOSED) {
+                tSocket.close();
+                promises.push(once(tSocket, 'close'))
+            }
+            if (oSocket.readyState !== WebSocket.CLOSED) {
+                oSocket.close();
+                promises.push(once(oSocket, 'close'));
+            }
+            return promises;
+        }, <Promise<unknown>[]>[]));
     }
 
     private async startStrategy(): Promise<void> {
         const Strategy = <StrategyCtor>await import(resolve(
             process.cwd(),
-            process.argv[3],
+            dirname(process.argv[3]),
             this.instanceConfig.strategyPath,
         ));
 

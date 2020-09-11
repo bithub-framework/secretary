@@ -24,7 +24,7 @@ declare class ContextMarket extends Startable implements ContextMarketPublicData
 declare class Context extends Startable {
     private instanceConfig;
     [marketId: number]: ContextMarket;
-    constructor(instanceConfig: InstanceConfig);
+    constructor(instanceConfig: InstanceConfig, privateRequests: PrivateRequests);
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;
 }

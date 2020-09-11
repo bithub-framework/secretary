@@ -1,24 +1,27 @@
-import Startable from 'startable';
+import { Startable } from 'startable';
 import { readJsonSync } from 'fs-extra';
-import { resolve } from 'path';
+import { resolve, dirname } from 'path';
 import WebSocket from 'ws';
 import { once } from 'events';
 import Context from './context';
+import PrivateRequests from './private-requests';
 import config from './config';
 class Secretary extends Startable {
     constructor() {
         super();
-        this.publicSockets = {};
+        this.publicSockets = [];
         this.instanceConfig = readJsonSync(process.argv[3]);
-        this.ctx = new Context(this.instanceConfig);
+        this.ctx = new Context(this.instanceConfig, new PrivateRequests());
     }
     async _start() {
+        await this.ctx.start(err => void this.stop(err));
         await this.connectPublicCenter();
         await this.startStrategy();
     }
     async _stop() {
         if (this.strategy)
             await this.strategy.stop();
+        await this.disconnectPublicCenter();
         await this.ctx.stop();
     }
     async connectPublicCenter() {
@@ -26,22 +29,39 @@ class Secretary extends Startable {
             const marketName = `${exchange}/${pair}`;
             const oSocket = new WebSocket(`${config.PUBLIC_CENTER_BASE_URL}/${marketName}/orderbook`);
             oSocket.on('message', (message) => {
-                oSocket.emit('data', JSON.parse(message));
+                const orderbook = JSON.parse(message);
+                this.ctx[mid].orderbook = orderbook;
+                this.ctx[mid].emit('orderbook', orderbook);
             });
-            await once(oSocket, 'open');
             const tSocket = new WebSocket(`${config.PUBLIC_CENTER_BASE_URL}/${marketName}/trades`);
             tSocket.on('message', (message) => {
-                tSocket.emit('data', JSON.parse(message));
+                const trades = JSON.parse(message);
+                trades.forEach(trade => void this.ctx[mid].trades.push(trade, trade.time));
+                this.ctx[mid].emit('trades', trades);
             });
-            await once(tSocket, 'open');
             this.publicSockets[mid] = {
                 trades: tSocket,
                 orderbook: oSocket,
             };
+            await once(oSocket, 'open');
+            await once(tSocket, 'open');
         }
     }
+    async disconnectPublicCenter() {
+        await Promise.all(this.publicSockets.reduce((promises, { trades: tSocket, orderbook: oSocket, }) => {
+            if (tSocket.readyState !== WebSocket.CLOSED) {
+                tSocket.close();
+                promises.push(once(tSocket, 'close'));
+            }
+            if (oSocket.readyState !== WebSocket.CLOSED) {
+                oSocket.close();
+                promises.push(once(oSocket, 'close'));
+            }
+            return promises;
+        }, []));
+    }
     async startStrategy() {
-        const Strategy = await import(resolve(process.cwd(), process.argv[3], this.instanceConfig.strategyPath));
+        const Strategy = await import(resolve(process.cwd(), dirname(process.argv[3]), this.instanceConfig.strategyPath));
         this.strategy = new Strategy(this.ctx);
         await this.strategy.start(err => void this.stop(err));
     }

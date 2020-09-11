@@ -11,7 +11,6 @@ import {
     Trade,
     Order,
 } from './interfaces';
-import config from './config';
 import { OrderId } from 'interfaces';
 
 class ContextAccount implements ContextAccountPrivateApi {
@@ -95,9 +94,9 @@ class Context extends Startable {
 
     constructor(
         private instanceConfig: InstanceConfig,
+        privateRequests: PrivateRequests,
     ) {
         super();
-        const privateRequests = new PrivateRequests();
         for (const mid of this.instanceConfig.markets.keys()) {
             this[mid] = new ContextMarket(
                 this.instanceConfig, mid,

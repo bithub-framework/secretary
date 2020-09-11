@@ -2,7 +2,6 @@ import Startable from 'startable';
 import TtlQueue from 'ttl-queue';
 // import pythonize from 'pythonized-array';
 import Queue from 'queue';
-import PrivateRequests from './private-requests';
 class ContextAccount {
     constructor(instanceConfig, mid, aid, privateRequests) {
         this.privateRequests = privateRequests;
@@ -45,10 +44,9 @@ class ContextMarket extends Startable {
     }
 }
 class Context extends Startable {
-    constructor(instanceConfig) {
+    constructor(instanceConfig, privateRequests) {
         super();
         this.instanceConfig = instanceConfig;
-        const privateRequests = new PrivateRequests();
         for (const mid of this.instanceConfig.markets.keys()) {
             this[mid] = new ContextMarket(this.instanceConfig, mid, privateRequests);
         }

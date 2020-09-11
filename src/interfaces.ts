@@ -1,6 +1,5 @@
 export * from 'interfaces';
 import EventEmitter from 'eventemitter3';
-import WebSocket from 'ws';
 import {
     Orderbook,
     Order,
@@ -45,21 +44,4 @@ export interface InstanceConfig {
     }[],
     strategyPath: string;
     tradeTtl: number;
-}
-
-// Strategy
-
-export type Strategy = StartableLike;
-
-export interface StrategyCtor {
-    new(ctx: Context): Strategy;
-}
-
-// Sockets
-
-export interface PublicSockets {
-    [marketId: number]: {
-        trades: WebSocket;
-        orderbook: WebSocket;
-    };
 }
