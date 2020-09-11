@@ -592,7 +592,7 @@
         "affectsGlobalScope": false
       },
       "./src/secretary.ts": {
-        "version": "4d5437261b40349a654ab0e20dfe6014b1d6be1bc5cd1d20e19a9f7aa9b78d19",
+        "version": "58b1e6a0e6c220b26ef40236511f077540c21b030ad1590cb61a42021c80ca49",
         "signature": "2549322e6064a20e07f939ce9149049b890037a08c3574d1dbe0a5010c17340d",
         "affectsGlobalScope": false
       },

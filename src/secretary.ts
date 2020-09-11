@@ -80,19 +80,20 @@ class Secretary extends Startable {
     }
 
     private async disconnectPublicCenter(): Promise<void> {
-        await Promise.all(this.publicSockets.reduce((promises, {
-            trades: tSocket, orderbook: oSocket,
-        }) => {
+        for (const sockets of this.publicSockets) {
+            if (!sockets) continue;
+            const { trades: tSocket, orderbook: oSocket } = sockets;
+
+            // TODO: WebSocket.CONNECTING
             if (tSocket.readyState !== WebSocket.CLOSED) {
                 tSocket.close();
-                promises.push(once(tSocket, 'close'))
+                await once(tSocket, 'close');
             }
             if (oSocket.readyState !== WebSocket.CLOSED) {
                 oSocket.close();
-                promises.push(once(oSocket, 'close'));
+                await once(oSocket, 'close');
             }
-            return promises;
-        }, <Promise<unknown>[]>[]));
+        }
     }
 
     private async startStrategy(): Promise<void> {
