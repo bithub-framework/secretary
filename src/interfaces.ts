@@ -6,7 +6,6 @@ import {
     Trade,
     OrderId,
 } from 'interfaces';
-import { StartableLike } from 'startable';
 import { RandomAccessIterableQueueInterface as RAIQI } from 'queue';
 
 // Context
