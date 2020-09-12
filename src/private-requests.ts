@@ -2,44 +2,52 @@ import fetch from 'node-fetch';
 import {
     Order,
     OrderId,
+    InstanceConfig,
 } from './interfaces';
-import config from './config';
 
 class PrivateRequests {
+    constructor(private instanceConfig: InstanceConfig) { }
+
     public async makeOrder(
-        marketName: string,
-        accountName: string,
+        mid: number,
+        aid: number,
         order: Order,
     ): Promise<OrderId> {
         return fetch(
-            `${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName}/make-order`,
+            `${this.instanceConfig.markets[mid].accounts[aid]}/make-order`,
             {
                 method: 'post',
                 body: JSON.stringify(order),
                 headers: { 'Content-Type': 'application/json' },
             }
-        );
+        ).then(res => {
+            if (!res.ok) throw new Error(res.statusText);
+            return res.json();
+        });
     }
 
     public async cancelOrder(
-        marketName: string,
-        accountName: string,
+        mid: number,
+        aid: number,
         orderId: OrderId,
     ): Promise<void> {
         return fetch(
-            `${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName
-            }/cancel-order?oid=${orderId}`,
-        ).then(() => { });
+            `${this.instanceConfig.markets[mid].accounts[aid]}/cancel-order?oid=${orderId}`,
+        ).then(res => {
+            if (!res.ok) throw new Error(res.statusText);
+        });
     }
 
     public async getOpenOrders(
-        marketName: string,
-        accountName: string,
+        mid: number,
+        aid: number,
     ): Promise<Order[]> {
         return fetch(
-            `${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName
-            }/get-open-orders`,
-        ).then(res => res.json());
+            `${this.instanceConfig.markets[mid].accounts[aid]}/get-open-orders`,
+        ).then(res => {
+            if (!res.ok) throw new Error(res.statusText);
+            return res.json();
+        });
     }
 }
 

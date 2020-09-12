@@ -1,4 +1,4 @@
-import { Startable, StartableLike } from 'startable';
+import Startable from 'startable';
 import { readJsonSync } from 'fs-extra';
 import { resolve, dirname } from 'path';
 import WebSocket from 'ws';
@@ -9,61 +9,58 @@ import {
     InstanceConfig,
     Trade,
     Orderbook,
+    Strategy,
+    StrategyCtor,
 } from './interfaces';
-import config from './config';
 
-
-
-export type Strategy = StartableLike;
-
-export interface StrategyCtor {
-    new(ctx: Context): Strategy;
-}
 
 class Secretary extends Startable {
     private instanceConfig: InstanceConfig;
     private ctx: Context;
     private strategy?: Strategy;
     private publicSockets: {
-        trades: WebSocket,
-        orderbook: WebSocket,
-    }[] = [];
+        [marketId: number]: {
+            trades: WebSocket,
+            orderbook: WebSocket,
+        },
+    } = {};
 
     constructor() {
         super();
         this.instanceConfig = readJsonSync(process.argv[3]);
         this.ctx = new Context(
             this.instanceConfig,
-            new PrivateRequests(),
+            new PrivateRequests(this.instanceConfig),
         );
     }
 
     protected async _start(): Promise<void> {
         await this.ctx.start(err => void this.stop(err));
-        await this.connectPublicCenter();
+        await this.connectPublicAgents();
         await this.startStrategy();
     }
 
     protected async _stop(): Promise<void> {
         if (this.strategy) await this.strategy.stop();
-        await this.disconnectPublicCenter();
+        await this.disconnectPublicAgents();
         await this.ctx.stop();
     }
 
-    private async connectPublicCenter(): Promise<void> {
-        for (const [mid, {
-            exchange, pair,
-        }] of this.instanceConfig.markets.entries()) {
-            const marketName = `${exchange}/${pair}`;
+    private async connectPublicAgents(): Promise<void> {
+        for (const [
+            mid, { orderbookUrl, tradesUrl },
+        ] of <[
+            number, InstanceConfig['markets'][0],
+        ][]><unknown>Object.entries(this.instanceConfig.markets)) {
 
-            const oSocket = new WebSocket(`${config.PUBLIC_CENTER_BASE_URL}/${marketName}/orderbook`);
+            const oSocket = new WebSocket(orderbookUrl);
             oSocket.on('message', (message: string) => {
                 const orderbook = <Orderbook>JSON.parse(message);
                 this.ctx[mid].orderbook = orderbook;
                 this.ctx[mid].emit('orderbook', orderbook);
             });
 
-            const tSocket = new WebSocket(`${config.PUBLIC_CENTER_BASE_URL}/${marketName}/trades`);
+            const tSocket = new WebSocket(tradesUrl);
             tSocket.on('message', (message: string) => {
                 const trades = <Trade[]>JSON.parse(message);
                 trades.forEach(trade => void this.ctx[mid].trades.push(trade, trade.time));
@@ -79,11 +76,10 @@ class Secretary extends Startable {
         }
     }
 
-    private async disconnectPublicCenter(): Promise<void> {
-        for (const sockets of this.publicSockets) {
-            if (!sockets) continue;
-            const { trades: tSocket, orderbook: oSocket } = sockets;
-
+    private async disconnectPublicAgents(): Promise<void> {
+        for (const {
+            trades: tSocket, orderbook: oSocket,
+        } of Object.values(this.publicSockets)) {
             // TODO: WebSocket.CONNECTING
             if (tSocket.readyState !== WebSocket.CLOSED) {
                 tSocket.close();

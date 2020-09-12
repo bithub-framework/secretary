@@ -201,11 +201,6 @@
         "signature": "cd6efb9467a8b6338ece2e2855e37765700f2cd061ca54b01b33878cf5c7677e",
         "affectsGlobalScope": true
       },
-      "./src/config.ts": {
-        "version": "5c078235bff8b1a33ff319d2eaa936c9e36546379cfefad6398f570c15e6dbb8",
-        "signature": "7663dcd01f4b7ff5fe8712bb2c7bf964ef3b395eb55b0b6a7cbd25c25683a466",
-        "affectsGlobalScope": false
-      },
       "./node_modules/eventemitter3/index.d.ts": {
         "version": "b80c780c52524beb13488942543972c8b0e54400e8b59cee0169f38d0fabb968",
         "signature": "b80c780c52524beb13488942543972c8b0e54400e8b59cee0169f38d0fabb968",
@@ -562,18 +557,18 @@
         "affectsGlobalScope": false
       },
       "./src/interfaces.ts": {
-        "version": "4f18e448493c90dffc9fd627274b7a349814c9e50af04417699858acc80dc844",
-        "signature": "63721ee12d0fa9eb2c314802dacf6483885910009dcd44a169536b3eb85e3527",
+        "version": "0017cf9c843fc635cb1d77292f3ee05b811fe4c728a434f21d5baecaae9ed4dd",
+        "signature": "46753876eaac95c8a5350d40f865b72ad2554d32088725236b9cbb10c6dbe9fa",
         "affectsGlobalScope": false
       },
       "./src/private-requests.ts": {
-        "version": "45ef71595423b1e9d859d174366663b6ea11dcea6ea03e6092ed82ae481ccc5f",
-        "signature": "c675e7af3c4f17ba912858c236ef98138fabeb0af76cd3dabe150a006e4e5190",
+        "version": "47f6f544e5c90d6c2b9e72e697798001a74c7357e960c92c36a3d4d0a2692160",
+        "signature": "4374b8ecff17146e22fe97c6f192ff1579e4c6b2951de57f0f3e43395edc7756",
         "affectsGlobalScope": false
       },
       "./src/context.ts": {
-        "version": "22bb57e5cad6b6b347404c986727bd5bd0570202106167a8810efc98837f0014",
-        "signature": "fcfa0fd413c8e1487b554b2ea00a1ad183fd6570e7d0d7587e063539de274d72",
+        "version": "a611dfaac0e6168dc481a186281668bb50e58326e46f64bc719be23c2048132a",
+        "signature": "64cc2f3570b8820e1576abe0379b0a8038a5580f3926723b5d9312133eacd6cc",
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
@@ -592,8 +587,8 @@
         "affectsGlobalScope": false
       },
       "./src/secretary.ts": {
-        "version": "58b1e6a0e6c220b26ef40236511f077540c21b030ad1590cb61a42021c80ca49",
-        "signature": "2549322e6064a20e07f939ce9149049b890037a08c3574d1dbe0a5010c17340d",
+        "version": "61fb147a9f4195f106bcf728c0de84cf4613f84316a33015483bc9e1e40097cc",
+        "signature": "a11986174ddcd5c43cf78a9c89014d277cd83875c8e2df4dded15c6a9be31bde",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/chai/index.d.ts": {
@@ -1498,18 +1493,11 @@
         "./node_modules/@types/node/ts3.3/util.d.ts",
         "./node_modules/startable/dist/startable.d.ts"
       ],
-      "./src/config.ts": [
-        "./node_modules/@types/node/ts3.1/fs.d.ts",
-        "./node_modules/@types/node/ts3.1/util.d.ts",
-        "./node_modules/@types/node/ts3.3/fs.d.ts",
-        "./node_modules/@types/node/ts3.3/util.d.ts"
-      ],
       "./src/context.ts": [
         "./node_modules/@types/node/ts3.1/fs.d.ts",
         "./node_modules/@types/node/ts3.1/util.d.ts",
         "./node_modules/@types/node/ts3.3/fs.d.ts",
         "./node_modules/@types/node/ts3.3/util.d.ts",
-        "./node_modules/interfaces/dist/index.d.ts",
         "./node_modules/startable/dist/index.d.ts",
         "./node_modules/ttl-queue/dist/index.d.ts",
         "./node_modules/ttl-queue/node_modules/queue/dist/index.d.ts",
@@ -1538,7 +1526,6 @@
         "./node_modules/@types/node/ts3.1/util.d.ts",
         "./node_modules/@types/node/ts3.3/fs.d.ts",
         "./node_modules/@types/node/ts3.3/util.d.ts",
-        "./src/config.ts",
         "./src/interfaces.ts"
       ],
       "./src/secretary.ts": [
@@ -1551,7 +1538,6 @@
         "./node_modules/@types/node/ts3.3/util.d.ts",
         "./node_modules/@types/ws/index.d.ts",
         "./node_modules/startable/dist/index.d.ts",
-        "./src/config.ts",
         "./src/context.ts",
         "./src/interfaces.ts",
         "./src/private-requests.ts"
@@ -2612,7 +2598,6 @@
         "./node_modules/startable/dist/startable.d.ts"
       ],
       "./src/context.ts": [
-        "./node_modules/interfaces/dist/index.d.ts",
         "./node_modules/startable/dist/index.d.ts",
         "./node_modules/ttl-queue/dist/index.d.ts",
         "./src/interfaces.ts",
@@ -2621,14 +2606,14 @@
       "./src/interfaces.ts": [
         "./node_modules/eventemitter3/index.d.ts",
         "./node_modules/interfaces/dist/index.d.ts",
+        "./node_modules/startable/dist/index.d.ts",
         "./node_modules/ttl-queue/node_modules/queue/dist/index.d.ts"
       ],
       "./src/private-requests.ts": [
         "./src/interfaces.ts"
       ],
       "./src/secretary.ts": [
-        "./node_modules/startable/dist/index.d.ts",
-        "./src/context.ts"
+        "./node_modules/startable/dist/index.d.ts"
       ],
       "../../../../../../usr/local/lib/node_modules/typescript/lib/lib.es2015.collection.d.ts": [
         "./node_modules/@types/node/ts3.1/fs.d.ts",
@@ -2959,7 +2944,6 @@
       "./node_modules/ttl-queue/node_modules/queue/dist/random-access-linear-iterable.d.ts",
       "./node_modules/ttl-queue/node_modules/queue/dist/random-access-linear.d.ts",
       "./node_modules/ttl-queue/node_modules/startable/dist/index.d.ts",
-      "./src/config.ts",
       "./src/context.ts",
       "./src/index.ts",
       "./src/interfaces.ts",

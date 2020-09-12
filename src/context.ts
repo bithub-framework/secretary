@@ -10,42 +10,36 @@ import {
     Orderbook,
     Trade,
     Order,
+    OrderId,
 } from './interfaces';
-import { OrderId } from 'interfaces';
 
 class ContextAccount implements ContextAccountPrivateApi {
-    private marketConfig: InstanceConfig['markets'][0];
-    private accountConfig: InstanceConfig['markets'][0]['accounts'][0];
     constructor(
-        instanceConfig: InstanceConfig,
-        mid: number,
-        aid: number,
+        private mid: number,
+        private aid: number,
         private privateRequests: PrivateRequests,
-    ) {
-        this.marketConfig = instanceConfig.markets[mid];
-        this.accountConfig = this.marketConfig.accounts[aid];
-    }
+    ) { }
 
-    public async makeOrder(order: Order) {
+    public async makeOrder(order: Order): Promise<OrderId> {
         return this.privateRequests.makeOrder(
-            `${this.marketConfig.exchange}/${this.marketConfig.pair}`,
-            this.accountConfig,
+            this.mid,
+            this.aid,
             order,
         );
     }
 
-    public async cancelOrder(oid: OrderId) {
+    public async cancelOrder(oid: OrderId): Promise<void> {
         return this.privateRequests.cancelOrder(
-            `${this.marketConfig.exchange}/${this.marketConfig.pair}`,
-            this.accountConfig,
+            this.mid,
+            this.aid,
             oid,
         );
     }
 
-    public async getOpenOrders() {
+    public async getOpenOrders(): Promise<Order[]> {
         return this.privateRequests.getOpenOrders(
-            `${this.marketConfig.exchange}/${this.marketConfig.pair}`,
-            this.accountConfig,
+            this.mid,
+            this.aid,
         );
     }
 }
@@ -58,14 +52,14 @@ class ContextMarket extends Startable implements ContextMarketPublicData {
     constructor(
         instanceConfig: InstanceConfig,
         mid: number,
-        privateRequest: PrivateRequests,
+        privateRequests: PrivateRequests,
     ) {
         super();
         const marketConfig = instanceConfig.markets[mid];
-        for (const aid of marketConfig.accounts.keys()) {
+        for (const aid of <number[]><unknown>Object.keys(marketConfig.accounts)) {
             this[aid] = new ContextAccount(
-                instanceConfig, mid, aid,
-                privateRequest,
+                mid, aid,
+                privateRequests,
             );
         }
         this.trades = new TtlQueue<Trade, NodeJS.Timeout>({
@@ -97,7 +91,7 @@ class Context extends Startable {
         privateRequests: PrivateRequests,
     ) {
         super();
-        for (const mid of this.instanceConfig.markets.keys()) {
+        for (const mid of <number[]><unknown>Object.keys(this.instanceConfig.markets)) {
             this[mid] = new ContextMarket(
                 this.instanceConfig, mid,
                 privateRequests,
@@ -106,16 +100,18 @@ class Context extends Startable {
     }
 
     protected async _start() {
-        for (const mid of this.instanceConfig.markets.keys()) {
+        for (const mid of <number[]><unknown>Object.keys(this.instanceConfig.markets)) {
             await this[mid].start(err => void this.stop(err));
         }
     }
 
     protected async _stop() {
-        for (const mid of this.instanceConfig.markets.keys()) {
+        for (const mid of <number[]><unknown>Object.keys(this.instanceConfig.markets)) {
             await this[mid].stop();
         }
     }
+
+    public async next() { }
 }
 
 export {

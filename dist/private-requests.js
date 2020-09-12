@@ -1,18 +1,31 @@
 import fetch from 'node-fetch';
-import config from './config';
 class PrivateRequests {
-    async makeOrder(marketName, accountName, order) {
-        return fetch(`${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName}/make-order`, {
+    constructor(instanceConfig) {
+        this.instanceConfig = instanceConfig;
+    }
+    async makeOrder(mid, aid, order) {
+        return fetch(`${this.instanceConfig.markets[mid].accounts[aid]}/make-order`, {
             method: 'post',
             body: JSON.stringify(order),
             headers: { 'Content-Type': 'application/json' },
+        }).then(res => {
+            if (!res.ok)
+                throw new Error(res.statusText);
+            return res.json();
         });
     }
-    async cancelOrder(marketName, accountName, orderId) {
-        return fetch(`${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName}/cancel-order?oid=${orderId}`).then(() => { });
+    async cancelOrder(mid, aid, orderId) {
+        return fetch(`${this.instanceConfig.markets[mid].accounts[aid]}/cancel-order?oid=${orderId}`).then(res => {
+            if (!res.ok)
+                throw new Error(res.statusText);
+        });
     }
-    async getOpenOrders(marketName, accountName) {
-        return fetch(`${config.PRIVATE_CENTER_BASE_URL}/${marketName}/${accountName}/get-open-orders`).then(res => res.json());
+    async getOpenOrders(mid, aid) {
+        return fetch(`${this.instanceConfig.markets[mid].accounts[aid]}/get-open-orders`).then(res => {
+            if (!res.ok)
+                throw new Error(res.statusText);
+            return res.json();
+        });
     }
 }
 export default PrivateRequests;

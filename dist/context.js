@@ -3,27 +3,27 @@ import TtlQueue from 'ttl-queue';
 // import pythonize from 'pythonized-array';
 import Queue from 'queue';
 class ContextAccount {
-    constructor(instanceConfig, mid, aid, privateRequests) {
+    constructor(mid, aid, privateRequests) {
+        this.mid = mid;
+        this.aid = aid;
         this.privateRequests = privateRequests;
-        this.marketConfig = instanceConfig.markets[mid];
-        this.accountConfig = this.marketConfig.accounts[aid];
     }
     async makeOrder(order) {
-        return this.privateRequests.makeOrder(`${this.marketConfig.exchange}/${this.marketConfig.pair}`, this.accountConfig, order);
+        return this.privateRequests.makeOrder(this.mid, this.aid, order);
     }
     async cancelOrder(oid) {
-        return this.privateRequests.cancelOrder(`${this.marketConfig.exchange}/${this.marketConfig.pair}`, this.accountConfig, oid);
+        return this.privateRequests.cancelOrder(this.mid, this.aid, oid);
     }
     async getOpenOrders() {
-        return this.privateRequests.getOpenOrders(`${this.marketConfig.exchange}/${this.marketConfig.pair}`, this.accountConfig);
+        return this.privateRequests.getOpenOrders(this.mid, this.aid);
     }
 }
 class ContextMarket extends Startable {
-    constructor(instanceConfig, mid, privateRequest) {
+    constructor(instanceConfig, mid, privateRequests) {
         super();
         const marketConfig = instanceConfig.markets[mid];
-        for (const aid of marketConfig.accounts.keys()) {
-            this[aid] = new ContextAccount(instanceConfig, mid, aid, privateRequest);
+        for (const aid of Object.keys(marketConfig.accounts)) {
+            this[aid] = new ContextAccount(mid, aid, privateRequests);
         }
         this.trades = new TtlQueue({
             ttl: 2 * 60 * 1000,
@@ -47,20 +47,21 @@ class Context extends Startable {
     constructor(instanceConfig, privateRequests) {
         super();
         this.instanceConfig = instanceConfig;
-        for (const mid of this.instanceConfig.markets.keys()) {
+        for (const mid of Object.keys(this.instanceConfig.markets)) {
             this[mid] = new ContextMarket(this.instanceConfig, mid, privateRequests);
         }
     }
     async _start() {
-        for (const mid of this.instanceConfig.markets.keys()) {
+        for (const mid of Object.keys(this.instanceConfig.markets)) {
             await this[mid].start(err => void this.stop(err));
         }
     }
     async _stop() {
-        for (const mid of this.instanceConfig.markets.keys()) {
+        for (const mid of Object.keys(this.instanceConfig.markets)) {
             await this[mid].stop();
         }
     }
+    async next() { }
 }
 export { Context as default, Context, };
 //# sourceMappingURL=context.js.map

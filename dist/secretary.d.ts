@@ -1,9 +1,4 @@
-import { Startable, StartableLike } from 'startable';
-import Context from './context';
-export declare type Strategy = StartableLike;
-export interface StrategyCtor {
-    new (ctx: Context): Strategy;
-}
+import Startable from 'startable';
 declare class Secretary extends Startable {
     private instanceConfig;
     private ctx;
@@ -12,8 +7,8 @@ declare class Secretary extends Startable {
     constructor();
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;
-    private connectPublicCenter;
-    private disconnectPublicCenter;
+    private connectPublicAgents;
+    private disconnectPublicAgents;
     private startStrategy;
 }
 export default Secretary;

@@ -7,6 +7,7 @@ import {
     OrderId,
 } from 'interfaces';
 import { RandomAccessIterableQueueInterface as RAIQI } from 'queue';
+import { StartableLike } from 'startable';
 
 // Context
 
@@ -37,10 +38,22 @@ export interface ContextAccount extends ContextAccountPrivateApi { }
 
 export interface InstanceConfig {
     markets: {
-        exchange: string;
-        pair: string;
-        accounts: string[];
-    }[],
+        [marketId: number]: {
+            orderbookUrl: string;
+            tradesUrl: string;
+            accounts: {
+                [accountId: number]: string;
+            };
+        }
+    },
     strategyPath: string;
     tradeTtl: number;
+}
+
+// Strategy
+
+export type Strategy = StartableLike;
+
+export interface StrategyCtor {
+    new(ctx: Context): Strategy;
 }
