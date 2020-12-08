@@ -1,7 +1,7 @@
 import TtlQueue from 'ttl-queue';
 import Startable from 'startable';
-import config from './config';
-import { PromisifiedWebSocket } from 'promisified-websocket';
+import secretaryConfig from './config';
+import PWebSocket from 'promisified-websocket';
 class ContextMarketPublicApi extends Startable {
     constructor(instanceConfig, mid) {
         super();
@@ -27,14 +27,14 @@ class ContextMarketPublicApi extends Startable {
         };
         this.trades = new TtlQueue({
             ttl: instanceConfig.TRADE_TTL,
-            cleaningInterval: config.CLEANING_INTERVAL,
+            cleaningInterval: secretaryConfig.CLEANING_INTERVAL,
         });
         this.orderbook = {
             asks: [], bids: [], time: Number.NEGATIVE_INFINITY,
         };
         const marketConfig = instanceConfig.markets[mid];
-        this.oSocket = new PromisifiedWebSocket(marketConfig.ORDERBOOK_URL);
-        this.tSocket = new PromisifiedWebSocket(marketConfig.TRADES_URL);
+        this.oSocket = new PWebSocket(marketConfig.ORDERBOOK_URL);
+        this.tSocket = new PWebSocket(marketConfig.TRADES_URL);
     }
     async _start() {
         await this.trades.start(err => void this.stop(err).catch(() => { }));

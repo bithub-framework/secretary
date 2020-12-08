@@ -1,10 +1,12 @@
 import Startable from 'startable';
 import { ContextAccountPrivateApi } from './private-api';
 import { ContextMarketPublicApi } from './public-api';
+import Bluebird from 'bluebird';
 class Context extends Startable {
     constructor(config) {
         super();
         this.config = config;
+        this.sleep = Bluebird.delay;
         for (const mid of this.config.markets.keys()) {
             this[mid] = new ContextMarket(this.config, mid);
         }

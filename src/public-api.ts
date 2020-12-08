@@ -6,14 +6,14 @@ import {
 } from './interfaces';
 import TtlQueue from 'ttl-queue';
 import Startable from 'startable';
-import config from './config';
-import { PromisifiedWebSocket } from 'promisified-websocket';
+import secretaryConfig from './config';
+import PWebSocket from 'promisified-websocket';
 
 class ContextMarketPublicApi extends Startable implements ContextMarketPublicApiLike {
     public orderbook: Orderbook;
     public trades: TtlQueue<Trade>;
-    private oSocket: PromisifiedWebSocket;
-    private tSocket: PromisifiedWebSocket;
+    private oSocket: PWebSocket;
+    private tSocket: PWebSocket;
 
     constructor(
         instanceConfig: InstanceConfig,
@@ -23,14 +23,14 @@ class ContextMarketPublicApi extends Startable implements ContextMarketPublicApi
 
         this.trades = new TtlQueue<Trade>({
             ttl: instanceConfig.TRADE_TTL,
-            cleaningInterval: config.CLEANING_INTERVAL,
+            cleaningInterval: secretaryConfig.CLEANING_INTERVAL,
         });
         this.orderbook = {
             asks: [], bids: [], time: Number.NEGATIVE_INFINITY,
         }
         const marketConfig = instanceConfig.markets[mid];
-        this.oSocket = new PromisifiedWebSocket(marketConfig.ORDERBOOK_URL);
-        this.tSocket = new PromisifiedWebSocket(marketConfig.TRADES_URL)
+        this.oSocket = new PWebSocket(marketConfig.ORDERBOOK_URL);
+        this.tSocket = new PWebSocket(marketConfig.TRADES_URL)
     }
 
     protected async _start() {

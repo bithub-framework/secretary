@@ -6,6 +6,8 @@ import { StartableLike } from 'startable';
 import TtlQueue from 'ttl-queue';
 export interface ContextLike {
     [marketId: number]: ContextMarketLike;
+    sleep: (ms: number) => Promise<void>;
+    next: () => Promise<void>;
 }
 export interface ContextMarketLike extends ContextMarketPublicApiLike {
     [accountId: number]: ContextAccountLike;
