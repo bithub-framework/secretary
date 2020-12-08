@@ -1,59 +1,55 @@
 export * from 'interfaces';
-import EventEmitter from 'eventemitter3';
+import { EventEmitter } from 'events';
 import {
     Orderbook,
-    Order,
+    LimitOrder,
+    OpenOrder,
     Trade,
     OrderId,
-} from 'interfaces';
-import { RandomAccessIterableQueueInterface as RAIQI } from 'queue';
+} from './interfaces';
 import { StartableLike } from 'startable';
+import TtlQueue from 'ttl-queue';
 
 // Context
 
-export interface ContextMarketPublicData extends EventEmitter {
-    orderbook: Orderbook;
-    trades: RAIQI<Trade>;
+export interface ContextLike {
+    [marketId: number]: ContextMarketLike;
 }
 
-export interface ContextAccountPrivateApi {
-    makeOrder(order: Order): Promise<OrderId>;
+export interface ContextMarketLike extends ContextMarketPublicApiLike {
+    [accountId: number]: ContextAccountLike;
+}
+
+export interface ContextAccountLike extends ContextAccountPrivateApiLike { }
+
+export interface ContextMarketPublicApiLike extends EventEmitter {
+    orderbook: Orderbook;
+    trades: TtlQueue<Trade>;
+}
+
+export interface ContextAccountPrivateApiLike {
+    makeLimitOrder(order: LimitOrder): Promise<OrderId>;
     // getOrder(orderId: OrderId): Promise<Order>;
-    getOpenOrders(): Promise<Order[]>;
+    getOpenOrders(): Promise<OpenOrder[]>;
     cancelOrder(orderId: OrderId): Promise<void>;
     // getAccount(): Promise<void>;
 }
-
-export interface Context {
-    [marketId: number]: ContextMarket;
-}
-
-export interface ContextMarket extends ContextMarketPublicData {
-    [accountId: number]: ContextAccount;
-}
-
-export interface ContextAccount extends ContextAccountPrivateApi { }
 
 // Instances
 
 export interface InstanceConfig {
     markets: {
-        [marketId: number]: {
-            orderbookUrl: string;
-            tradesUrl: string;
-            accounts: {
-                [accountId: number]: string;
-            };
-        }
-    },
-    strategyPath: string;
-    tradeTtl: number;
+        ORDERBOOK_URL: string;
+        TRADES_URL: string;
+        accounts: {
+            URL: string;
+        }[];
+    }[],
+    TRADE_TTL: number;
 }
 
 // Strategy
 
-export type Strategy = StartableLike;
-
-export interface StrategyCtor {
-    new(ctx: Context): Strategy;
+export interface StrategyConstructor {
+    new(ctx: ContextLike): StartableLike;
 }

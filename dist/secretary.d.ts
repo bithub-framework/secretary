@@ -1,15 +1,11 @@
-import Startable from 'startable';
+import { Startable, StartableLike } from 'startable';
+import { InstanceConfig } from './interfaces';
 declare class Secretary extends Startable {
+    private strategy;
     private instanceConfig;
     private ctx;
-    private strategy?;
-    private publicSockets;
-    constructor();
+    constructor(strategy: StartableLike, instanceConfig: InstanceConfig);
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;
-    private connectPublicAgents;
-    private disconnectPublicAgents;
-    private startStrategy;
 }
-export default Secretary;
-export { Secretary };
+export { Secretary as default, Secretary, };

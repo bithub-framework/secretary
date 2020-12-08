@@ -1,39 +1,36 @@
+/// <reference types="node" />
 export * from 'interfaces';
-import EventEmitter from 'eventemitter3';
-import { Orderbook, Order, Trade, OrderId } from 'interfaces';
-import { RandomAccessIterableQueueInterface as RAIQI } from 'queue';
+import { EventEmitter } from 'events';
+import { Orderbook, LimitOrder, OpenOrder, Trade, OrderId } from './interfaces';
 import { StartableLike } from 'startable';
-export interface ContextMarketPublicData extends EventEmitter {
+import TtlQueue from 'ttl-queue';
+export interface ContextLike {
+    [marketId: number]: ContextMarketLike;
+}
+export interface ContextMarketLike extends ContextMarketPublicApiLike {
+    [accountId: number]: ContextAccountLike;
+}
+export interface ContextAccountLike extends ContextAccountPrivateApiLike {
+}
+export interface ContextMarketPublicApiLike extends EventEmitter {
     orderbook: Orderbook;
-    trades: RAIQI<Trade>;
+    trades: TtlQueue<Trade>;
 }
-export interface ContextAccountPrivateApi {
-    makeOrder(order: Order): Promise<OrderId>;
-    getOpenOrders(): Promise<Order[]>;
+export interface ContextAccountPrivateApiLike {
+    makeLimitOrder(order: LimitOrder): Promise<OrderId>;
+    getOpenOrders(): Promise<OpenOrder[]>;
     cancelOrder(orderId: OrderId): Promise<void>;
-}
-export interface Context {
-    [marketId: number]: ContextMarket;
-}
-export interface ContextMarket extends ContextMarketPublicData {
-    [accountId: number]: ContextAccount;
-}
-export interface ContextAccount extends ContextAccountPrivateApi {
 }
 export interface InstanceConfig {
     markets: {
-        [marketId: number]: {
-            orderbookUrl: string;
-            tradesUrl: string;
-            accounts: {
-                [accountId: number]: string;
-            };
-        };
-    };
-    strategyPath: string;
-    tradeTtl: number;
+        ORDERBOOK_URL: string;
+        TRADES_URL: string;
+        accounts: {
+            URL: string;
+        }[];
+    }[];
+    TRADE_TTL: number;
 }
-export declare type Strategy = StartableLike;
-export interface StrategyCtor {
-    new (ctx: Context): Strategy;
+export interface StrategyConstructor {
+    new (ctx: ContextLike): StartableLike;
 }

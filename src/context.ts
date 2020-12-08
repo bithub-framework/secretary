@@ -1,118 +1,60 @@
 import Startable from 'startable';
-import TtlQueue from 'ttl-queue';
-// import pythonize from 'pythonized-array';
-import Queue from 'queue';
-import PrivateRequests from './private-requests';
+import { ContextAccountPrivateApi } from './private-api';
+import { ContextMarketPublicApi } from './public-api';
 import {
-    ContextMarketPublicData,
-    ContextAccountPrivateApi,
     InstanceConfig,
-    Orderbook,
-    Trade,
-    Order,
-    OrderId,
+    ContextAccountLike,
+    ContextMarketLike,
+    ContextLike,
 } from './interfaces';
 
-class ContextAccount implements ContextAccountPrivateApi {
-    constructor(
-        private mid: number,
-        private aid: number,
-        private privateRequests: PrivateRequests,
-    ) { }
-
-    public async makeOrder(order: Order): Promise<OrderId> {
-        return this.privateRequests.makeOrder(
-            this.mid,
-            this.aid,
-            order,
-        );
-    }
-
-    public async cancelOrder(oid: OrderId): Promise<void> {
-        return this.privateRequests.cancelOrder(
-            this.mid,
-            this.aid,
-            oid,
-        );
-    }
-
-    public async getOpenOrders(): Promise<Order[]> {
-        return this.privateRequests.getOpenOrders(
-            this.mid,
-            this.aid,
-        );
-    }
-}
-
-class ContextMarket extends Startable implements ContextMarketPublicData {
-    [accountId: number]: ContextAccount;
-    public orderbook: Orderbook;
-    public trades: TtlQueue<Trade, NodeJS.Timeout>;
-
-    constructor(
-        instanceConfig: InstanceConfig,
-        mid: number,
-        privateRequests: PrivateRequests,
-    ) {
-        super();
-        const marketConfig = instanceConfig.markets[mid];
-        for (const aid of <number[]><unknown>Object.keys(marketConfig.accounts)) {
-            this[aid] = new ContextAccount(
-                mid, aid,
-                privateRequests,
-            );
-        }
-        this.trades = new TtlQueue<Trade, NodeJS.Timeout>({
-            ttl: 2 * 60 * 1000,
-            cleaningInterval: 10 * 1000,
-            elemCarrierConstructor: Queue,
-            timeCarrierConstructor: Queue,
-        }, setTimeout, clearTimeout);
-        // this.trades = pythonize<Trade>(this.trades);
-        this.orderbook = {
-            asks: [], bids: [], time: Number.NEGATIVE_INFINITY,
-        }
-    }
-
-    protected async _start() {
-        await this.trades.start(err => void this.stop(err));
-    }
-
-    protected async _stop() {
-        await this.trades.stop();
-    }
-}
-
-class Context extends Startable {
+class Context extends Startable implements ContextLike {
     [marketId: number]: ContextMarket;
 
     constructor(
-        private instanceConfig: InstanceConfig,
-        privateRequests: PrivateRequests,
+        private config: InstanceConfig,
     ) {
         super();
-        for (const mid of <number[]><unknown>Object.keys(this.instanceConfig.markets)) {
+        for (const mid of this.config.markets.keys()) {
             this[mid] = new ContextMarket(
-                this.instanceConfig, mid,
-                privateRequests,
+                this.config, mid,
             );
         }
     }
 
     protected async _start() {
-        for (const mid of <number[]><unknown>Object.keys(this.instanceConfig.markets)) {
-            await this[mid].start(err => void this.stop(err));
-        }
+        for (const mid of this.config.markets.keys())
+            await this[mid].start(err => this.stop(err).catch(() => { }));
     }
 
     protected async _stop() {
-        for (const mid of <number[]><unknown>Object.keys(this.instanceConfig.markets)) {
+        for (const mid of this.config.markets.keys())
             await this[mid].stop();
-        }
     }
 
     public async next() { }
 }
+
+
+class ContextMarket extends ContextMarketPublicApi implements ContextMarketLike {
+    [accountId: number]: ContextAccount;
+
+    constructor(
+        config: InstanceConfig,
+        mid: number,
+    ) {
+        super(config, mid);
+        const marketConfig = config.markets[mid];
+        for (const aid of marketConfig.accounts.keys()) {
+            this[aid] = new ContextAccount(
+                config,
+                mid, aid,
+            );
+        }
+    }
+}
+
+class ContextAccount extends ContextAccountPrivateApi implements ContextAccountLike { }
 
 export {
     Context as default,
