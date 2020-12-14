@@ -556,6 +556,11 @@
         "signature": "eb18f62f5a7a19684fc9e57aede4c8679df9167d16543ce37849ad65f2648555",
         "affectsGlobalScope": false
       },
+      "./src/index.ts": {
+        "version": "01322a08df912609033109628d27a38b1a5be1c0e31721a0407472b831d31cfa",
+        "signature": "01322a08df912609033109628d27a38b1a5be1c0e31721a0407472b831d31cfa",
+        "affectsGlobalScope": false
+      },
       "./node_modules/@types/fs-extra/index.d.ts": {
         "version": "501e038d89f1203bf63078154827d19b42b29597168fc20674096c4dd9a70f8d",
         "signature": "501e038d89f1203bf63078154827d19b42b29597168fc20674096c4dd9a70f8d",
@@ -1207,6 +1212,10 @@
         "./src/private-api.ts",
         "./src/public-api.ts"
       ],
+      "./src/index.ts": [
+        "./src/interfaces.ts",
+        "./src/secretary.ts"
+      ],
       "./src/interfaces.ts": [
         "./node_modules/@types/node/events.d.ts",
         "./node_modules/interfaces/dist/index.d.ts",
@@ -1709,6 +1718,10 @@
         "./src/private-api.ts",
         "./src/public-api.ts"
       ],
+      "./src/index.ts": [
+        "./src/interfaces.ts",
+        "./src/secretary.ts"
+      ],
       "./src/interfaces.ts": [
         "./node_modules/@types/node/events.d.ts",
         "./node_modules/interfaces/dist/index.d.ts",
@@ -1828,6 +1841,7 @@
       "./node_modules/ttl-queue/node_modules/startable/dist/index.d.ts",
       "./src/config.ts",
       "./src/context.ts",
+      "./src/index.ts",
       "./src/interfaces.ts",
       "./src/private-api.ts",
       "./src/public-api.ts",
