@@ -1,7 +1,4 @@
-import { ASK, BID, } from './interfaces';
-import TtlQueue from 'ttl-queue';
 import Startable from 'startable';
-import secretaryConfig from './config';
 import PWebSocket from 'promisified-websocket';
 class ContextMarketPublicApi extends Startable {
     constructor(instanceConfig, mid) {
@@ -9,7 +6,6 @@ class ContextMarketPublicApi extends Startable {
         this.onOrderbook = (message) => {
             try {
                 const orderbook = JSON.parse(message);
-                this.orderbook = orderbook;
                 this.emit('orderbook', orderbook);
             }
             catch (err) {
@@ -19,26 +15,17 @@ class ContextMarketPublicApi extends Startable {
         this.onTrades = (message) => {
             try {
                 const trades = JSON.parse(message);
-                trades.forEach(trade => void this.trades.push(trade, trade.time));
                 this.emit('trades', trades);
             }
             catch (err) {
                 this.stop().catch(() => { });
             }
         };
-        this.trades = new TtlQueue({
-            ttl: instanceConfig.TRADE_TTL,
-            cleaningInterval: secretaryConfig.CLEANING_INTERVAL,
-        });
-        this.orderbook = {
-            [ASK]: [], [BID]: [], time: Number.NEGATIVE_INFINITY,
-        };
         const marketConfig = instanceConfig.markets[mid];
         this.oSocket = new PWebSocket(marketConfig.ORDERBOOK_URL);
         this.tSocket = new PWebSocket(marketConfig.TRADES_URL);
     }
     async _start() {
-        await this.trades.start(err => void this.stop(err).catch(() => { }));
         await this.oSocket.start(err => void this.stop(err).catch(() => { }));
         this.oSocket.on('message', this.onOrderbook);
         await this.tSocket.start(err => void this.stop(err).catch(() => { }));
@@ -49,7 +36,6 @@ class ContextMarketPublicApi extends Startable {
         await this.oSocket.stop();
         this.tSocket.off('message', this.onTrades);
         await this.tSocket.stop();
-        await this.trades.stop();
     }
 }
 export { ContextMarketPublicApi as default, ContextMarketPublicApi, };

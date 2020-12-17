@@ -28,6 +28,13 @@ class ContextAccountPrivateApi {
             return res.json();
         });
     }
+    async getAssets() {
+        return fetch(`${this.accountConfig.URL}/get-assets`).then(res => {
+            if (!res.ok)
+                throw new Error(res.statusText);
+            return res.json();
+        });
+    }
 }
 export { ContextAccountPrivateApi as default, ContextAccountPrivateApi, };
 //# sourceMappingURL=private-api.js.map

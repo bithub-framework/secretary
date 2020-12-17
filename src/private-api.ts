@@ -6,6 +6,7 @@ import {
     InstanceConfig,
     ContextAccountPrivateApiLike,
     BID,
+    Assets,
 } from './interfaces';
 
 class ContextAccountPrivateApi implements ContextAccountPrivateApiLike {
@@ -47,6 +48,15 @@ class ContextAccountPrivateApi implements ContextAccountPrivateApiLike {
     public async getOpenOrders(): Promise<OpenOrder[]> {
         return fetch(
             `${this.accountConfig.URL}/get-open-orders`,
+        ).then(res => {
+            if (!res.ok) throw new Error(res.statusText);
+            return res.json();
+        });
+    }
+
+    public async getAssets(): Promise<Assets> {
+        return fetch(
+            `${this.accountConfig.URL}/get-assets`,
         ).then(res => {
             if (!res.ok) throw new Error(res.statusText);
             return res.json();

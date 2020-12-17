@@ -20,13 +20,13 @@
     },
     "homepage": "https://github.com/zimtsui/secretary-js#readme",
     "dependencies": {
+        "@types/bluebird": "^3.5.33",
         "@types/node": "^14.14.10",
         "@types/node-fetch": "^2.5.7",
         "bluebird": "^3.7.2",
         "interfaces": "https://gitee.com/zimtsui/interfaces.git",
         "node-fetch": "^2.6.1",
         "promisified-websocket": "https://gitee.com/zimtsui/promisified-websocket.git",
-        "startable": "https://gitee.com/zimtsui/startable.git",
-        "ttl-queue": "https://gitee.com/zimtsui/ttl-queue.git"
+        "startable": "https://gitee.com/zimtsui/startable.git"
     }
 }
