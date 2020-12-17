@@ -3,6 +3,7 @@ import {
     Orderbook,
     Trade,
     InstanceConfig,
+    ASK, BID,
 } from './interfaces';
 import TtlQueue from 'ttl-queue';
 import Startable from 'startable';
@@ -26,7 +27,7 @@ class ContextMarketPublicApi extends Startable implements ContextMarketPublicApi
             cleaningInterval: secretaryConfig.CLEANING_INTERVAL,
         });
         this.orderbook = {
-            asks: [], bids: [], time: Number.NEGATIVE_INFINITY,
+            [ASK]: [], [BID]: [], time: Number.NEGATIVE_INFINITY,
         }
         const marketConfig = instanceConfig.markets[mid];
         this.oSocket = new PWebSocket(marketConfig.ORDERBOOK_URL);

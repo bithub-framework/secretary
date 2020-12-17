@@ -1,10 +1,11 @@
 import fetch from 'node-fetch';
+import { BID, } from './interfaces';
 class ContextAccountPrivateApi {
     constructor(config, mid, aid) {
         this.accountConfig = config.markets[mid].accounts[aid];
     }
-    async makeLimitOrder(order) {
-        return fetch(`${this.accountConfig.URL}/make-limit-order`, {
+    async makeLimitOrder(order, open = order.side === BID) {
+        return fetch(`${this.accountConfig.URL}/make-limit-order?open=${open}`, {
             method: 'post',
             body: JSON.stringify(order),
             headers: { 'Content-Type': 'application/json' },

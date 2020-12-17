@@ -5,6 +5,7 @@ import {
     OrderId,
     InstanceConfig,
     ContextAccountPrivateApiLike,
+    BID,
 } from './interfaces';
 
 class ContextAccountPrivateApi implements ContextAccountPrivateApiLike {
@@ -18,9 +19,12 @@ class ContextAccountPrivateApi implements ContextAccountPrivateApiLike {
         this.accountConfig = config.markets[mid].accounts[aid];
     }
 
-    public async makeLimitOrder(order: LimitOrder): Promise<OrderId> {
+    public async makeLimitOrder(
+        order: LimitOrder,
+        open = order.side === BID,
+    ): Promise<OrderId> {
         return fetch(
-            `${this.accountConfig.URL}/make-limit-order`,
+            `${this.accountConfig.URL}/make-limit-order?open=${open}`,
             {
                 method: 'post',
                 body: JSON.stringify(order),

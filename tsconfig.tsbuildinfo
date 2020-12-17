@@ -476,9 +476,9 @@
         "signature": "f51382950fa81e3a54e9fd9f343fe583cfbb221f15a51936e12411699347effe",
         "affectsGlobalScope": false
       },
-      "./node_modules/interfaces/dist/index.d.ts": {
-        "version": "0290a493e574121559bfe431903318e4fd971f58ccba94a00f00d83ac1767c73",
-        "signature": "0290a493e574121559bfe431903318e4fd971f58ccba94a00f00d83ac1767c73",
+      "./node_modules/interfaces/dist/data.d.ts": {
+        "version": "93b99ecef7c7ebb86ce60f3a6eaec0c2f1af21a7e77e0be885793fee0e814b9d",
+        "signature": "93b99ecef7c7ebb86ce60f3a6eaec0c2f1af21a7e77e0be885793fee0e814b9d",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/double-ended-queue/index.d.ts": {
@@ -486,9 +486,34 @@
         "signature": "9c4de90f5d5e2b09b05799d655f45515d83638c4d7bde9151be3c236caf8402b",
         "affectsGlobalScope": false
       },
-      "./node_modules/ttl-queue/node_modules/queue/dist/queue.d.ts": {
+      "./node_modules/queue/dist/queue.d.ts": {
         "version": "a0a37131ff520b645e40fb93b9914523396aff5c5b43923f71c9a3a734ade01a",
         "signature": "a0a37131ff520b645e40fb93b9914523396aff5c5b43923f71c9a3a734ade01a",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/queue/dist/index.d.ts": {
+        "version": "cc3e2dd66510aa2dcef07a7578af94b74bce86072cf0c7bb6e5600fceb4a56d4",
+        "signature": "cc3e2dd66510aa2dcef07a7578af94b74bce86072cf0c7bb6e5600fceb4a56d4",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/interfaces/dist/context.d.ts": {
+        "version": "5f67402d4bb9559f7474dc2d91c4b8345ce85470aeadd8a97cb7604ba185dec9",
+        "signature": "5f67402d4bb9559f7474dc2d91c4b8345ce85470aeadd8a97cb7604ba185dec9",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/interfaces/dist/index.d.ts": {
+        "version": "54b215a738551cbb94bfbe599a3101726924eb838ab5f2511962556b8ec39357",
+        "signature": "54b215a738551cbb94bfbe599a3101726924eb838ab5f2511962556b8ec39357",
+        "affectsGlobalScope": false
+      },
+      "./src/interfaces.ts": {
+        "version": "eacf786bbed9c6ec47917462edfc59b3cf63a2b7513066f3638320bbb7d4d819",
+        "signature": "4f9309019135c9c12747068c68067e022be66ab1ba2f89b667423e2b4321ac94",
+        "affectsGlobalScope": false
+      },
+      "./src/private-api.ts": {
+        "version": "ac64a4b93076e323cffadab1cc5bc21e7ec9b2bc58af83bc421f6082a23b2251",
+        "signature": "5159ff2ef977b08831f8883c9b8e037b4ffd6ed2fcfcde0d375a7181f252d369",
         "affectsGlobalScope": false
       },
       "./node_modules/ttl-queue/node_modules/queue/dist/index.d.ts": {
@@ -511,16 +536,6 @@
         "signature": "13746db40902c12065c50e007942688d68645c94f461f104e4d5114917c85855",
         "affectsGlobalScope": false
       },
-      "./src/interfaces.ts": {
-        "version": "9932f9b9804b276c80a7eb8bc13d72f240fc0a527f5e8cc88227fd3f9fe302de",
-        "signature": "d5f6699ff58c14cf4e345d1767402c48b6627406ab52eb7ca999a9383fccf754",
-        "affectsGlobalScope": false
-      },
-      "./src/private-api.ts": {
-        "version": "3b22995e1426261254c6ff3f66e47ec367ec318b4e6e5c30d9353df37fa65c64",
-        "signature": "fd3ac269929462fc35a480b174ff17a4cf5b9f48dbab4e792e76d0d98773cb3b",
-        "affectsGlobalScope": false
-      },
       "./node_modules/@types/ws/index.d.ts": {
         "version": "c6e185824cae1ddea6706f4256d4bd499e8e9a37ed10689946c22984d68798c3",
         "signature": "c6e185824cae1ddea6706f4256d4bd499e8e9a37ed10689946c22984d68798c3",
@@ -537,7 +552,7 @@
         "affectsGlobalScope": false
       },
       "./src/public-api.ts": {
-        "version": "b0d449f0a8826f0bf3ab97e6d457e96825c7b175791f3ba7d31cf4053019eba4",
+        "version": "b46cc82dec79cb301b7c84936c09a4c41438c05cc15c76693f9f849f50dcb694",
         "signature": "a2f1aa8da3674fb2ed2b1a612f5a9c6caf26edfd8dba1fd7d3f59932687fef2b",
         "affectsGlobalScope": false
       },
@@ -552,13 +567,8 @@
         "affectsGlobalScope": false
       },
       "./src/secretary.ts": {
-        "version": "76b74c4e6d85cdb002f870ceca8128bb0e55da6005229c2727511809ccda3469",
-        "signature": "eb18f62f5a7a19684fc9e57aede4c8679df9167d16543ce37849ad65f2648555",
-        "affectsGlobalScope": false
-      },
-      "./src/index.ts": {
-        "version": "01322a08df912609033109628d27a38b1a5be1c0e31721a0407472b831d31cfa",
-        "signature": "01322a08df912609033109628d27a38b1a5be1c0e31721a0407472b831d31cfa",
+        "version": "9c0e92c33c3e4e1bd560252e43cdff3d5d193d3dc61cf3677e96c9b1c11839a4",
+        "signature": "b8e79fb1119a0b8065a6c823bbb03af1a98c6df7e00b80d0671fc4c661d94842",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/fs-extra/index.d.ts": {
@@ -1170,12 +1180,28 @@
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/@types/node/stream.d.ts"
       ],
+      "./node_modules/interfaces/dist/context.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/index.d.ts",
+        "./node_modules/interfaces/dist/data.d.ts",
+        "./node_modules/queue/dist/index.d.ts"
+      ],
+      "./node_modules/interfaces/dist/index.d.ts": [
+        "./node_modules/interfaces/dist/context.d.ts",
+        "./node_modules/interfaces/dist/data.d.ts"
+      ],
       "./node_modules/promisified-websocket/dist/index.d.ts": [
         "./node_modules/promisified-websocket/dist/websocket.d.ts"
       ],
       "./node_modules/promisified-websocket/dist/websocket.d.ts": [
         "./node_modules/@types/ws/index.d.ts",
         "./node_modules/startable/dist/index.d.ts"
+      ],
+      "./node_modules/queue/dist/index.d.ts": [
+        "./node_modules/queue/dist/queue.d.ts"
+      ],
+      "./node_modules/queue/dist/queue.d.ts": [
+        "./node_modules/@types/double-ended-queue/index.d.ts"
       ],
       "./node_modules/startable/dist/adaptor.d.ts": [
         "./node_modules/startable/dist/startable.d.ts"
@@ -1192,14 +1218,11 @@
         "./node_modules/ttl-queue/dist/ttl-queue.d.ts"
       ],
       "./node_modules/ttl-queue/dist/ttl-queue.d.ts": [
-        "./node_modules/startable/dist/index.d.ts",
-        "./node_modules/ttl-queue/node_modules/queue/dist/index.d.ts"
+        "./node_modules/queue/dist/index.d.ts",
+        "./node_modules/startable/dist/index.d.ts"
       ],
       "./node_modules/ttl-queue/node_modules/queue/dist/index.d.ts": [
-        "./node_modules/ttl-queue/node_modules/queue/dist/queue.d.ts"
-      ],
-      "./node_modules/ttl-queue/node_modules/queue/dist/queue.d.ts": [
-        "./node_modules/@types/double-ended-queue/index.d.ts"
+        "./node_modules/queue/dist/queue.d.ts"
       ],
       "./node_modules/ttl-queue/node_modules/startable/dist/index.d.ts": [
         "./node_modules/startable/dist/adaptor.d.ts",
@@ -1212,16 +1235,8 @@
         "./src/private-api.ts",
         "./src/public-api.ts"
       ],
-      "./src/index.ts": [
-        "./src/interfaces.ts",
-        "./src/secretary.ts"
-      ],
       "./src/interfaces.ts": [
-        "./node_modules/@types/node/events.d.ts",
-        "./node_modules/interfaces/dist/index.d.ts",
-        "./node_modules/startable/dist/index.d.ts",
-        "./node_modules/ttl-queue/dist/index.d.ts",
-        "./src/interfaces.ts"
+        "./node_modules/interfaces/dist/index.d.ts"
       ],
       "./src/private-api.ts": [
         "./node_modules/@types/node-fetch/index.d.ts",
@@ -1676,12 +1691,28 @@
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/@types/node/stream.d.ts"
       ],
+      "./node_modules/interfaces/dist/context.d.ts": [
+        "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/index.d.ts",
+        "./node_modules/interfaces/dist/data.d.ts",
+        "./node_modules/queue/dist/index.d.ts"
+      ],
+      "./node_modules/interfaces/dist/index.d.ts": [
+        "./node_modules/interfaces/dist/context.d.ts",
+        "./node_modules/interfaces/dist/data.d.ts"
+      ],
       "./node_modules/promisified-websocket/dist/index.d.ts": [
         "./node_modules/promisified-websocket/dist/websocket.d.ts"
       ],
       "./node_modules/promisified-websocket/dist/websocket.d.ts": [
         "./node_modules/@types/ws/index.d.ts",
         "./node_modules/startable/dist/index.d.ts"
+      ],
+      "./node_modules/queue/dist/index.d.ts": [
+        "./node_modules/queue/dist/queue.d.ts"
+      ],
+      "./node_modules/queue/dist/queue.d.ts": [
+        "./node_modules/@types/double-ended-queue/index.d.ts"
       ],
       "./node_modules/startable/dist/adaptor.d.ts": [
         "./node_modules/startable/dist/startable.d.ts"
@@ -1704,9 +1735,6 @@
       "./node_modules/ttl-queue/node_modules/queue/dist/index.d.ts": [
         "./node_modules/ttl-queue/node_modules/queue/dist/queue.d.ts"
       ],
-      "./node_modules/ttl-queue/node_modules/queue/dist/queue.d.ts": [
-        "./node_modules/@types/double-ended-queue/index.d.ts"
-      ],
       "./node_modules/ttl-queue/node_modules/startable/dist/index.d.ts": [
         "./node_modules/startable/dist/adaptor.d.ts",
         "./node_modules/startable/dist/startable.d.ts"
@@ -1718,16 +1746,8 @@
         "./src/private-api.ts",
         "./src/public-api.ts"
       ],
-      "./src/index.ts": [
-        "./src/interfaces.ts",
-        "./src/secretary.ts"
-      ],
       "./src/interfaces.ts": [
-        "./node_modules/@types/node/events.d.ts",
-        "./node_modules/interfaces/dist/index.d.ts",
-        "./node_modules/startable/dist/index.d.ts",
-        "./node_modules/ttl-queue/dist/index.d.ts",
-        "./src/interfaces.ts"
+        "./node_modules/interfaces/dist/index.d.ts"
       ],
       "./src/private-api.ts": [
         "./src/interfaces.ts"
@@ -1828,20 +1848,22 @@
       "./node_modules/@types/node/zlib.d.ts",
       "./node_modules/@types/ws/index.d.ts",
       "./node_modules/form-data/index.d.ts",
+      "./node_modules/interfaces/dist/context.d.ts",
+      "./node_modules/interfaces/dist/data.d.ts",
       "./node_modules/interfaces/dist/index.d.ts",
       "./node_modules/promisified-websocket/dist/index.d.ts",
       "./node_modules/promisified-websocket/dist/websocket.d.ts",
+      "./node_modules/queue/dist/index.d.ts",
+      "./node_modules/queue/dist/queue.d.ts",
       "./node_modules/startable/dist/adaptor.d.ts",
       "./node_modules/startable/dist/index.d.ts",
       "./node_modules/startable/dist/startable.d.ts",
       "./node_modules/ttl-queue/dist/index.d.ts",
       "./node_modules/ttl-queue/dist/ttl-queue.d.ts",
       "./node_modules/ttl-queue/node_modules/queue/dist/index.d.ts",
-      "./node_modules/ttl-queue/node_modules/queue/dist/queue.d.ts",
       "./node_modules/ttl-queue/node_modules/startable/dist/index.d.ts",
       "./src/config.ts",
       "./src/context.ts",
-      "./src/index.ts",
       "./src/interfaces.ts",
       "./src/private-api.ts",
       "./src/public-api.ts",

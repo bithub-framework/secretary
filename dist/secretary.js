@@ -1,19 +1,19 @@
 import { Startable } from 'startable';
 import Context from './context';
 class Secretary extends Startable {
-    constructor(strategy, instanceConfig) {
+    constructor(Strategy, instanceConfig) {
         super();
-        this.strategy = strategy;
         this.instanceConfig = instanceConfig;
-        this.ctx = new Context(this.instanceConfig);
+        this.context = new Context(this.instanceConfig);
+        this.strategy = new Strategy(this.context);
     }
     async _start() {
-        await this.ctx.start(err => void this.stop(err).catch(() => { }));
+        await this.context.start(err => void this.stop(err).catch(() => { }));
         await this.strategy.start(err => void this.stop(err).catch(() => { }));
     }
     async _stop() {
         await this.strategy.stop();
-        await this.ctx.stop();
+        await this.context.stop();
     }
 }
 export { Secretary as default, Secretary, };
