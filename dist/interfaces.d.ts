@@ -7,5 +7,4 @@ export interface InstanceConfig {
             URL: string;
         }[];
     }[];
-    TRADE_TTL: number;
 }
