@@ -31,8 +31,6 @@ class Context extends Startable implements ContextLike {
         for (const mid of this.config.markets.keys())
             await this[mid].stop();
     }
-
-    public async next() { }
 }
 
 

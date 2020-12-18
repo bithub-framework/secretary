@@ -19,7 +19,6 @@ class Context extends Startable {
         for (const mid of this.config.markets.keys())
             await this[mid].stop();
     }
-    async next() { }
 }
 class ContextMarket extends ContextMarketPublicApi {
     constructor(config, mid) {

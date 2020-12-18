@@ -10,7 +10,6 @@ declare class Context extends Startable implements ContextLike {
     constructor(config: Config);
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;
-    next(): Promise<void>;
 }
 declare class ContextMarket extends ContextMarketPublicApi implements ContextMarketLike {
     [accountId: number]: ContextAccount;
