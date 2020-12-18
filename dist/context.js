@@ -24,8 +24,7 @@ class Context extends Startable {
 class ContextMarket extends ContextMarketPublicApi {
     constructor(config, mid) {
         super(config, mid);
-        const marketConfig = config.markets[mid];
-        for (const aid of marketConfig.accounts.keys()) {
+        for (const aid of config.markets[mid].accounts.keys()) {
             this[aid] = new ContextAccount(config, mid, aid);
         }
     }
