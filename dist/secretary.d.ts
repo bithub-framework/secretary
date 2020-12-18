@@ -1,8 +1,5 @@
-import { Startable, StartableLike } from 'startable';
-import { Config, ContextLike } from './interfaces';
-interface StrategyConstructor {
-    new (context: ContextLike): StartableLike;
-}
+import { Startable } from 'startable';
+import { Config, StrategyConstructor } from './interfaces';
 declare class Secretary extends Startable {
     private config;
     private context;

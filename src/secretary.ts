@@ -2,12 +2,10 @@ import { Startable, StartableLike } from 'startable';
 import Context from './context';
 import {
     Config,
-    ContextLike,
+    StrategyConstructor,
 } from './interfaces';
 
-interface StrategyConstructor {
-    new(context: ContextLike): StartableLike;
-}
+
 
 class Secretary extends Startable {
     private context: Context;

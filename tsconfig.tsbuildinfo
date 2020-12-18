@@ -487,8 +487,8 @@
         "affectsGlobalScope": false
       },
       "./src/interfaces.ts": {
-        "version": "29a0da6e991c77501cd6cee96b37688d6d6ad8e866a5b48886f31f9dc01a9001",
-        "signature": "d7b97c08d48c3a107f673cccd2ffc9dea0b082c553ff81b99c1718201f3d7916",
+        "version": "1810ab4dbba40f54614be1bbc7ef922511a27636c28eab934b84feb31252694e",
+        "signature": "f876e638bd58377cca7721cec16e7e77d2a4b752a9bd1d1fd454308e80719119",
         "affectsGlobalScope": false
       },
       "./src/private-api.ts": {
@@ -527,8 +527,8 @@
         "affectsGlobalScope": false
       },
       "./src/secretary.ts": {
-        "version": "0127c6f0c6602808c0e3bd1c0386a68308774fc0918ed364f19555ca5bee45df",
-        "signature": "ce30ac0dbf7c2130e93a82e8c2e26888bc4f17ca1a2714111f10f76fa9a0e511",
+        "version": "97f52f4c44942710b697b41cb60ea2fe855a6e10cb1a2c22efe876dcb2b5f028",
+        "signature": "3140e0dbcddcbaa03589c5160f490ad29dc8604b022308690886aedd3d7ab8a1",
         "affectsGlobalScope": false
       },
       "../../../../node_modules/@types/accepts/index.d.ts": {
@@ -919,7 +919,8 @@
         "./src/public-api.ts"
       ],
       "./src/interfaces.ts": [
-        "./node_modules/interfaces/dist/index.d.ts"
+        "./node_modules/interfaces/dist/index.d.ts",
+        "./node_modules/startable/dist/index.d.ts"
       ],
       "./src/private-api.ts": [
         "./node_modules/@types/node-fetch/index.d.ts",
@@ -1221,7 +1222,8 @@
         "./src/public-api.ts"
       ],
       "./src/interfaces.ts": [
-        "./node_modules/interfaces/dist/index.d.ts"
+        "./node_modules/interfaces/dist/index.d.ts",
+        "./node_modules/startable/dist/index.d.ts"
       ],
       "./src/private-api.ts": [
         "./src/interfaces.ts"
