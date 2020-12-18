@@ -1,9 +1,9 @@
-import { ContextMarketPublicApiLike, InstanceConfig } from './interfaces';
+import { ContextMarketPublicApiLike, Config } from './interfaces';
 import Startable from 'startable';
 declare class ContextMarketPublicApi extends Startable implements ContextMarketPublicApiLike {
     private oSocket;
     private tSocket;
-    constructor(instanceConfig: InstanceConfig, mid: number);
+    constructor(instanceConfig: Config, mid: number);
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;
     private onOrderbook;

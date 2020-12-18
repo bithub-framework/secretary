@@ -2,7 +2,7 @@ import {
     ContextMarketPublicApiLike,
     Orderbook,
     Trade,
-    InstanceConfig,
+    Config,
 } from './interfaces';
 import Startable from 'startable';
 import PWebSocket from 'promisified-websocket';
@@ -12,7 +12,7 @@ class ContextMarketPublicApi extends Startable implements ContextMarketPublicApi
     private tSocket: PWebSocket;
 
     constructor(
-        instanceConfig: InstanceConfig,
+        instanceConfig: Config,
         mid: number,
     ) {
         super();

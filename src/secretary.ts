@@ -1,7 +1,7 @@
 import { Startable, StartableLike } from 'startable';
 import Context from './context';
 import {
-    InstanceConfig,
+    Config,
     ContextLike,
 } from './interfaces';
 
@@ -15,10 +15,10 @@ class Secretary extends Startable {
 
     constructor(
         Strategy: StrategyConstructor,
-        private instanceConfig: InstanceConfig,
+        private config: Config,
     ) {
         super();
-        this.context = new Context(this.instanceConfig);
+        this.context = new Context(this.config);
         this.strategy = new Strategy(this.context);
     }
 

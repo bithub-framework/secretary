@@ -3,16 +3,16 @@ import {
     LimitOrder,
     OpenOrder,
     OrderId,
-    InstanceConfig,
+    Config,
     ContextAccountPrivateApiLike,
     Assets,
 } from './interfaces';
 
 class ContextAccountPrivateApi implements ContextAccountPrivateApiLike {
-    private accountConfig: InstanceConfig['markets'][0]['accounts'][0];
+    private accountConfig: Config['markets'][0]['accounts'][0];
 
     constructor(
-        config: InstanceConfig,
+        config: Config,
         mid: number,
         aid: number,
     ) {

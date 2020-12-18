@@ -1,13 +1,13 @@
 import { Startable, StartableLike } from 'startable';
-import { InstanceConfig, ContextLike } from './interfaces';
+import { Config, ContextLike } from './interfaces';
 interface StrategyConstructor {
     new (context: ContextLike): StartableLike;
 }
 declare class Secretary extends Startable {
-    private instanceConfig;
+    private config;
     private context;
     private strategy;
-    constructor(Strategy: StrategyConstructor, instanceConfig: InstanceConfig);
+    constructor(Strategy: StrategyConstructor, config: Config);
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;
 }

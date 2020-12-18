@@ -1,5 +1,5 @@
 export * from 'interfaces';
-export interface InstanceConfig {
+export interface Config {
     markets: {
         ORDERBOOK_URL: string;
         TRADES_URL: string;

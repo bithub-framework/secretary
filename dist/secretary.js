@@ -1,10 +1,10 @@
 import { Startable } from 'startable';
 import Context from './context';
 class Secretary extends Startable {
-    constructor(Strategy, instanceConfig) {
+    constructor(Strategy, config) {
         super();
-        this.instanceConfig = instanceConfig;
-        this.context = new Context(this.instanceConfig);
+        this.config = config;
+        this.context = new Context(this.config);
         this.strategy = new Strategy(this.context);
     }
     async _start() {

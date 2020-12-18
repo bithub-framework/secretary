@@ -487,13 +487,13 @@
         "affectsGlobalScope": false
       },
       "./src/interfaces.ts": {
-        "version": "2caca862280d44c818df6cbea8f1ac96e95f52b9a581d8bccde032060f77fbe6",
-        "signature": "9effbe5660507a6e43b637f40acbb0030c2d9c8fce582ab96d37c73118b7c4b9",
+        "version": "29a0da6e991c77501cd6cee96b37688d6d6ad8e866a5b48886f31f9dc01a9001",
+        "signature": "d7b97c08d48c3a107f673cccd2ffc9dea0b082c553ff81b99c1718201f3d7916",
         "affectsGlobalScope": false
       },
       "./src/private-api.ts": {
-        "version": "2adea41435634fa92f18d32ad6075fc07c4758228dfadc30706f7249f00bf4dc",
-        "signature": "d73fec571fd254ec48d8b5adbf7e5904a3d2f27132f5fc27324e1734c1f13456",
+        "version": "b1ac0b746616bba0bcb81b698538bb226ce02d299c3984e5f4f540a8c08833b9",
+        "signature": "2dfdd7a54241a332a43480127982bfcdaa4b4a81f573602bafd0901103ee3d93",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/ws/index.d.ts": {
@@ -512,8 +512,8 @@
         "affectsGlobalScope": false
       },
       "./src/public-api.ts": {
-        "version": "8aff347e7b319fe93a70eee946d98c0db8cd7733a6c0be76f9dd0da9a6c78999",
-        "signature": "3bd7077405803ac93f452ec69185be23c1532ceb7345b00989bc6a0c7220b52c",
+        "version": "85dbb0ac84356f2830f2e64dfe17a31d6eb96e8842b3c44f324627f1590d42c2",
+        "signature": "efa956258f4e5652c1aeec8828e057927a273c928763f17b96d34b071a2899cc",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/bluebird/index.d.ts": {
@@ -522,13 +522,13 @@
         "affectsGlobalScope": false
       },
       "./src/context.ts": {
-        "version": "84fd33ac00816b9a0a2efdc9a96ce43b4307e888ff5e5a264a8724b54f2fff8a",
-        "signature": "390f9c384248c70fdaaa5684f4f3872376b85c2a7946a5663822efe25dd3b980",
+        "version": "c91ff3effcbd5c75c82f1ee55301221c5495257e160ec88d2b166579de8b9d21",
+        "signature": "5261e49db433585b5a5c1dc3cfc589038a179363b6c7ef374995dabf863d9188",
         "affectsGlobalScope": false
       },
       "./src/secretary.ts": {
-        "version": "9c0e92c33c3e4e1bd560252e43cdff3d5d193d3dc61cf3677e96c9b1c11839a4",
-        "signature": "b8e79fb1119a0b8065a6c823bbb03af1a98c6df7e00b80d0671fc4c661d94842",
+        "version": "0127c6f0c6602808c0e3bd1c0386a68308774fc0918ed364f19555ca5bee45df",
+        "signature": "ce30ac0dbf7c2130e93a82e8c2e26888bc4f17ca1a2714111f10f76fa9a0e511",
         "affectsGlobalScope": false
       },
       "../../../../node_modules/@types/accepts/index.d.ts": {

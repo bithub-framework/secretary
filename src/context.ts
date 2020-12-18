@@ -3,7 +3,7 @@ import { ContextAccountPrivateApi } from './private-api';
 import { ContextMarketPublicApi } from './public-api';
 import Bluebird from 'bluebird';
 import {
-    InstanceConfig,
+    Config,
     ContextAccountLike,
     ContextMarketLike,
     ContextLike,
@@ -14,7 +14,7 @@ class Context extends Startable implements ContextLike {
     public sleep = Bluebird.delay;
 
     constructor(
-        private config: InstanceConfig,
+        private config: Config,
     ) {
         super();
         for (const mid of this.config.markets.keys()) {
@@ -40,7 +40,7 @@ class ContextMarket extends ContextMarketPublicApi implements ContextMarketLike 
     [accountId: number]: ContextAccount;
 
     constructor(
-        config: InstanceConfig,
+        config: Config,
         mid: number,
     ) {
         super(config, mid);
