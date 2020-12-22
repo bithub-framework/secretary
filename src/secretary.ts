@@ -5,8 +5,6 @@ import {
     StrategyConstructor,
 } from './interfaces';
 
-
-
 class Secretary extends Startable {
     private context: Context;
     private strategy: StartableLike;

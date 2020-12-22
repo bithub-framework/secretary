@@ -471,9 +471,14 @@
         "signature": "f51382950fa81e3a54e9fd9f343fe583cfbb221f15a51936e12411699347effe",
         "affectsGlobalScope": false
       },
+      "./node_modules/@types/big.js/index.d.ts": {
+        "version": "90589e3f3eed0a07917117760dc77abb1c6c672eb7d1d3b4ca76b8cb48f73917",
+        "signature": "90589e3f3eed0a07917117760dc77abb1c6c672eb7d1d3b4ca76b8cb48f73917",
+        "affectsGlobalScope": true
+      },
       "./node_modules/interfaces/dist/data.d.ts": {
-        "version": "7e544980047ffc47ddd963f7478b9b34f886e8c92f7498d060206b41beb172b6",
-        "signature": "7e544980047ffc47ddd963f7478b9b34f886e8c92f7498d060206b41beb172b6",
+        "version": "40ba3f12e8d2675659781cc2ee775f484e53034f4127637acd9ee8ca0e925056",
+        "signature": "40ba3f12e8d2675659781cc2ee775f484e53034f4127637acd9ee8ca0e925056",
         "affectsGlobalScope": false
       },
       "./node_modules/interfaces/dist/context.d.ts": {
@@ -481,9 +486,14 @@
         "signature": "34496b45872ab6d8ec87074f114315460dd15a03e3c0db6ea902504ea719c6b6",
         "affectsGlobalScope": false
       },
+      "./node_modules/interfaces/dist/reviver.d.ts": {
+        "version": "dc80d857e567720142a212e22f7381d16b787731d86f50fe0fb6f6e5d8730864",
+        "signature": "dc80d857e567720142a212e22f7381d16b787731d86f50fe0fb6f6e5d8730864",
+        "affectsGlobalScope": false
+      },
       "./node_modules/interfaces/dist/index.d.ts": {
-        "version": "54b215a738551cbb94bfbe599a3101726924eb838ab5f2511962556b8ec39357",
-        "signature": "54b215a738551cbb94bfbe599a3101726924eb838ab5f2511962556b8ec39357",
+        "version": "67fcb51fb05a8d5581c0c999c058dc7576c45816f9e607768c02df91f82c7e8d",
+        "signature": "67fcb51fb05a8d5581c0c999c058dc7576c45816f9e607768c02df91f82c7e8d",
         "affectsGlobalScope": false
       },
       "./src/interfaces.ts": {
@@ -512,7 +522,7 @@
         "affectsGlobalScope": false
       },
       "./src/public-api.ts": {
-        "version": "85dbb0ac84356f2830f2e64dfe17a31d6eb96e8842b3c44f324627f1590d42c2",
+        "version": "062030eb46ef4cf40b0038f47a0dcf2a4357445e88caf5037ab6eca974464b8a",
         "signature": "efa956258f4e5652c1aeec8828e057927a273c928763f17b96d34b071a2899cc",
         "affectsGlobalScope": false
       },
@@ -527,7 +537,7 @@
         "affectsGlobalScope": false
       },
       "./src/secretary.ts": {
-        "version": "97f52f4c44942710b697b41cb60ea2fe855a6e10cb1a2c22efe876dcb2b5f028",
+        "version": "fbdecab93553a4a6ddc57fb7bf2b4aebced9175fdfa8d6acaf3083f9ec299d1f",
         "signature": "3140e0dbcddcbaa03589c5160f490ad29dc8604b022308690886aedd3d7ab8a1",
         "affectsGlobalScope": false
       },
@@ -889,9 +899,13 @@
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/interfaces/dist/data.d.ts"
       ],
+      "./node_modules/interfaces/dist/data.d.ts": [
+        "./node_modules/@types/big.js/index.d.ts"
+      ],
       "./node_modules/interfaces/dist/index.d.ts": [
         "./node_modules/interfaces/dist/context.d.ts",
-        "./node_modules/interfaces/dist/data.d.ts"
+        "./node_modules/interfaces/dist/data.d.ts",
+        "./node_modules/interfaces/dist/reviver.d.ts"
       ],
       "./node_modules/promisified-websocket/dist/index.d.ts": [
         "./node_modules/promisified-websocket/dist/websocket.d.ts"
@@ -1192,9 +1206,13 @@
         "./node_modules/@types/node/index.d.ts",
         "./node_modules/interfaces/dist/data.d.ts"
       ],
+      "./node_modules/interfaces/dist/data.d.ts": [
+        "./node_modules/@types/big.js/index.d.ts"
+      ],
       "./node_modules/interfaces/dist/index.d.ts": [
         "./node_modules/interfaces/dist/context.d.ts",
-        "./node_modules/interfaces/dist/data.d.ts"
+        "./node_modules/interfaces/dist/data.d.ts",
+        "./node_modules/interfaces/dist/reviver.d.ts"
       ],
       "./node_modules/promisified-websocket/dist/index.d.ts": [
         "./node_modules/promisified-websocket/dist/websocket.d.ts"
@@ -1255,6 +1273,7 @@
       "../../../../node_modules/@types/qs/index.d.ts",
       "../../../../node_modules/@types/range-parser/index.d.ts",
       "../../../../node_modules/@types/serve-static/index.d.ts",
+      "./node_modules/@types/big.js/index.d.ts",
       "./node_modules/@types/bluebird/index.d.ts",
       "./node_modules/@types/events/index.d.ts",
       "./node_modules/@types/node-fetch/externals.d.ts",
@@ -1311,6 +1330,7 @@
       "./node_modules/interfaces/dist/context.d.ts",
       "./node_modules/interfaces/dist/data.d.ts",
       "./node_modules/interfaces/dist/index.d.ts",
+      "./node_modules/interfaces/dist/reviver.d.ts",
       "./node_modules/promisified-websocket/dist/index.d.ts",
       "./node_modules/promisified-websocket/dist/websocket.d.ts",
       "./node_modules/startable/dist/adaptor.d.ts",

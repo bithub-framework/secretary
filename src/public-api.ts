@@ -3,6 +3,7 @@ import {
     Orderbook,
     Trade,
     Config,
+    reviver,
 } from './interfaces';
 import Startable from 'startable';
 import PWebSocket from 'promisified-websocket';
@@ -37,7 +38,7 @@ class ContextMarketPublicApi extends Startable implements ContextMarketPublicApi
 
     private onOrderbook = (message: string) => {
         try {
-            const orderbook = <Orderbook>JSON.parse(message);
+            const orderbook = <Orderbook>JSON.parse(message, reviver);
             this.emit('orderbook', orderbook);
         } catch (err) {
             this.stop().catch(() => { });
@@ -46,7 +47,7 @@ class ContextMarketPublicApi extends Startable implements ContextMarketPublicApi
 
     private onTrades = (message: string) => {
         try {
-            const trades = <Trade[]>JSON.parse(message);
+            const trades = <Trade[]>JSON.parse(message, reviver);
             this.emit('trades', trades);
         } catch (err) {
             this.stop().catch(() => { });

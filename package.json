@@ -20,9 +20,11 @@
     },
     "homepage": "https://github.com/zimtsui/secretary-js#readme",
     "dependencies": {
+        "@types/big.js": "^6.0.1",
         "@types/bluebird": "^3.5.33",
         "@types/node": "^14.14.10",
         "@types/node-fetch": "^2.5.7",
+        "big.js": "^6.0.3",
         "bluebird": "^3.7.2",
         "interfaces": "https://gitee.com/zimtsui/interfaces.git",
         "node-fetch": "^2.6.1",

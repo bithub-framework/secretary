@@ -1,3 +1,4 @@
+import { reviver, } from './interfaces';
 import Startable from 'startable';
 import PWebSocket from 'promisified-websocket';
 class ContextMarketPublicApi extends Startable {
@@ -5,7 +6,7 @@ class ContextMarketPublicApi extends Startable {
         super();
         this.onOrderbook = (message) => {
             try {
-                const orderbook = JSON.parse(message);
+                const orderbook = JSON.parse(message, reviver);
                 this.emit('orderbook', orderbook);
             }
             catch (err) {
@@ -14,7 +15,7 @@ class ContextMarketPublicApi extends Startable {
         };
         this.onTrades = (message) => {
             try {
-                const trades = JSON.parse(message);
+                const trades = JSON.parse(message, reviver);
                 this.emit('trades', trades);
             }
             catch (err) {
