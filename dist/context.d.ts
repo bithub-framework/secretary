@@ -6,7 +6,8 @@ import { Config, ContextAccountLike, ContextMarketLike, ContextLike } from './in
 declare class Context extends Startable implements ContextLike {
     private config;
     [marketId: number]: ContextMarket;
-    sleep: typeof Bluebird.delay;
+    sleep: (ms: number) => Bluebird<void>;
+    now: () => number;
     constructor(config: Config);
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;

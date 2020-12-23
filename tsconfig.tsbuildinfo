@@ -477,13 +477,13 @@
         "affectsGlobalScope": true
       },
       "./node_modules/interfaces/dist/data.d.ts": {
-        "version": "40ba3f12e8d2675659781cc2ee775f484e53034f4127637acd9ee8ca0e925056",
-        "signature": "40ba3f12e8d2675659781cc2ee775f484e53034f4127637acd9ee8ca0e925056",
+        "version": "53c68b4d808ba83525bd022f12fd78ccb7cec79dc9255c720ffee04333f0eb33",
+        "signature": "53c68b4d808ba83525bd022f12fd78ccb7cec79dc9255c720ffee04333f0eb33",
         "affectsGlobalScope": false
       },
       "./node_modules/interfaces/dist/context.d.ts": {
-        "version": "34496b45872ab6d8ec87074f114315460dd15a03e3c0db6ea902504ea719c6b6",
-        "signature": "34496b45872ab6d8ec87074f114315460dd15a03e3c0db6ea902504ea719c6b6",
+        "version": "94d180edefed13840b45c074db9fb49f439a61f253769377eabfb2aaa6dc29be",
+        "signature": "94d180edefed13840b45c074db9fb49f439a61f253769377eabfb2aaa6dc29be",
         "affectsGlobalScope": false
       },
       "./node_modules/interfaces/dist/reviver.d.ts": {
@@ -532,8 +532,8 @@
         "affectsGlobalScope": false
       },
       "./src/context.ts": {
-        "version": "4a7562f3fc6561acc7c6661a12cd3d3de77008ef23d476c1392e78077e228b70",
-        "signature": "d93f4749a3793c4ec3f38016e1428f881a6f612d02c470391538d0a39222caa7",
+        "version": "4b1d12513ae3100244d71d91ff0269b359b5e6dd741fa3f0b70f184f8b6b4d03",
+        "signature": "159b85e593aee8f2cf7ad8dc31e94252b3032b94bc556104afe2f6083b6baa88",
         "affectsGlobalScope": false
       },
       "./src/secretary.ts": {

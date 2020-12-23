@@ -11,7 +11,8 @@ import {
 
 class Context extends Startable implements ContextLike {
     [marketId: number]: ContextMarket;
-    public sleep = Bluebird.delay;
+    public sleep = (ms: number) => Bluebird.delay(ms);
+    public now = () => Date.now();
 
     constructor(
         private config: Config,

@@ -6,7 +6,8 @@ class Context extends Startable {
     constructor(config) {
         super();
         this.config = config;
-        this.sleep = Bluebird.delay;
+        this.sleep = (ms) => Bluebird.delay(ms);
+        this.now = () => Date.now();
         for (const mid of this.config.markets.keys()) {
             this[mid] = new ContextMarket(this.config, mid);
         }
