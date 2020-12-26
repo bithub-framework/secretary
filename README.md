@@ -32,7 +32,7 @@ interface Service {
 
 ### Context
 
-由于本框架是非侵入式的，context 是你的策略与 Tecretary 进行交互的唯一通道。
+由于本框架是非侵入式的，context 是你的策略与框架进行交互的唯一接口。
 
 十进制小数的数据，使用高精度计算库 [big.js](https://github.com/MikeMcl/big.js/)。
 
