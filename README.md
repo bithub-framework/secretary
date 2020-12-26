@@ -1,6 +1,6 @@
 # SecretaryJS
 
-SecretaryJS 是 BitHub 的组件。是你的策略下单和获取数据的接口
+SecretaryJS 是 BitHub 的组件，是你的策略下单和获取数据的接口。
 
 ## 特性
 
@@ -34,7 +34,7 @@ interface Service {
 
 由于本框架是非侵入式的，context 是你的策略与框架进行交互的唯一接口。
 
-十进制小数的数据，使用高精度计算库 [big.js](https://github.com/MikeMcl/big.js/)。
+可能为十进制小数的数据使用高精度计算库 [big.js](https://github.com/MikeMcl/big.js/)。
 
 ```ts
 import { Big } from 'big.js';
