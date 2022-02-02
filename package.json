@@ -2,12 +2,11 @@
     "name": "secretary",
     "version": "0.0.1",
     "description": "",
-    "type": "module",
-    "main": "./dist/secretary.js",
-    "types": "./dist/secretary.d.ts",
+    "main": "./build/secretary.js",
+    "types": "./build/secretary.d.ts",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc -b"
+        "build": "tsc -b ./src/tsconfig.json"
     },
     "repository": {
         "type": "git",
@@ -28,7 +27,7 @@
         "bluebird": "^3.7.2",
         "interfaces": "https://gitee.com/zimtsui/interfaces.git",
         "node-fetch": "^2.6.1",
-        "promisified-websocket": "https://gitee.com/zimtsui/promisified-websocket.git",
+        "promisify-websocket": "https://gitee.com/zimtsui/promisify-websocket.git",
         "startable": "https://gitee.com/zimtsui/startable.git"
     }
 }

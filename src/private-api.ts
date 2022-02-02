@@ -2,13 +2,19 @@ import fetch from 'node-fetch';
 import {
     LimitOrder,
     OpenOrder,
+    Balances,
+    Positions,
     OrderId,
     Config,
-    ContextAccountPrivateApiLike,
-    Assets,
+    ContextAccountApiLike,
+    reviver,
+    Amendment,
 } from './interfaces';
+import Big from 'big.js';
+import { EventEmitter } from 'events';
 
-class ContextAccountPrivateApi implements ContextAccountPrivateApiLike {
+// TODO: 序列化之前，写成 literal
+class ContextAccountPrivateApi extends EventEmitter implements ContextAccountApiLike {
     private accountConfig: Config['markets'][0]['accounts'][0];
 
     constructor(
@@ -16,46 +22,76 @@ class ContextAccountPrivateApi implements ContextAccountPrivateApiLike {
         mid: number,
         aid: number,
     ) {
+        super();
         this.accountConfig = config.markets[mid].accounts[aid];
     }
 
-    public async makeLimitOrder(order: LimitOrder): Promise<OrderId> {
+    public async makeLimitOrders(orders: LimitOrder[]): Promise<OrderId[]> {
         return fetch(
-            `${this.accountConfig.URL}/make-limit-order`,
+            `${this.accountConfig.URL}/orders`,
             {
                 method: 'post',
-                body: JSON.stringify(order),
+                body: JSON.stringify(orders),
                 headers: { 'Content-Type': 'application/json' },
             }
-        ).then(res => {
+        ).then(async res => {
             if (!res.ok) throw new Error(res.statusText);
-            return res.json();
+            return JSON.parse(await res.text(), reviver);
         });
     }
 
-    public async cancelOrder(orderId: OrderId): Promise<void> {
+    public async amendLimitOrders(amendments: Amendment[]): Promise<Big[]> {
         return fetch(
-            `${this.accountConfig.URL}/cancel-order?oid=${orderId}`,
-        ).then(res => {
+            `${this.accountConfig.URL}/orders`,
+            {
+                method: 'put',
+                body: JSON.stringify(amendments),
+                headers: { 'Content-Type': 'application/json' },
+            }
+        ).then(async res => {
             if (!res.ok) throw new Error(res.statusText);
+            return JSON.parse(await res.text(), reviver);
+        });
+    }
+
+    public async cancelOrders(orders: OpenOrder[]): Promise<Big[]> {
+        return fetch(
+            `${this.accountConfig.URL}/orders`,
+            {
+                method: 'delete',
+                body: JSON.stringify(orderIds),
+                headers: { 'Content-Type': 'application/json' },
+            }
+        ).then(async res => {
+            if (!res.ok) throw new Error(res.statusText);
+            return JSON.parse(await res.text(), reviver);
         });
     }
 
     public async getOpenOrders(): Promise<OpenOrder[]> {
         return fetch(
-            `${this.accountConfig.URL}/get-open-orders`,
-        ).then(res => {
+            `${this.accountConfig.URL}/orders`,
+        ).then(async res => {
             if (!res.ok) throw new Error(res.statusText);
-            return res.json();
+            return JSON.parse(await res.text(), reviver);
         });
     }
 
-    public async getAssets(): Promise<Assets> {
+    public async getPositions(): Promise<Positions> {
         return fetch(
-            `${this.accountConfig.URL}/get-assets`,
-        ).then(res => {
+            `${this.accountConfig.URL}/positions`,
+        ).then(async res => {
             if (!res.ok) throw new Error(res.statusText);
-            return res.json();
+            return JSON.parse(await res.text(), reviver);
+        });
+    }
+
+    public async getBalances(): Promise<Balances> {
+        return fetch(
+            `${this.accountConfig.URL}/balances`,
+        ).then(async res => {
+            if (!res.ok) throw new Error(res.statusText);
+            return JSON.parse(await res.text(), reviver);
         });
     }
 }
